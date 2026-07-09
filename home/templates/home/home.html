@@ -1,0 +1,749 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SmartEdu ERP | Future of Education{% endblock %}
+
+{% block content %}
+
+<style>
+    .hero-section {
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #071952 0%, #0b666a 50%, #35a29f 100%);
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: "";
+        position: absolute;
+        width: 450px;
+        height: 450px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        top: -150px;
+        right: -100px;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        line-height: 1.1;
+    }
+
+    .hero-highlight {
+        color: #97feed;
+    }
+
+    .hero-text {
+        font-size: 1.2rem;
+        color: #e5f9f6;
+        max-width: 650px;
+    }
+
+    .btn-innovative {
+        padding: 14px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-innovative:hover {
+        transform: translateY(-4px);
+    }
+
+    .floating-card {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 25px;
+        padding: 35px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    /* SHOWCASE BANNER */
+
+    .showcase-banner {
+        width: 100%;
+        overflow: hidden;
+        background: #071952;
+    }
+
+    .showcase-banner img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+    }
+
+    /* QUICK MODULE STRIP */
+
+    .module-strip {
+        background: #ffffff;
+        border-bottom: 1px solid #eef1f1;
+    }
+
+    .module-pill {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 18px;
+        border-radius: 16px;
+        background: #f5faf9;
+        border: 1px solid #e6f2f1;
+        height: 100%;
+        transition: 0.25s;
+    }
+
+    .module-pill:hover {
+        background: #ecfaf7;
+        transform: translateY(-3px);
+    }
+
+    .module-pill i {
+        font-size: 18px;
+        color: #0b666a;
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: #d9f3ef;
+    }
+
+    .module-pill span {
+        font-weight: 600;
+        font-size: 0.92rem;
+        color: #071952;
+    }
+
+    /* FEATURE CARDS */
+
+    .feature-card {
+        border: none;
+        border-radius: 20px;
+        padding: 30px;
+        height: 100%;
+        transition: 0.3s;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+        width: 70px;
+        height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        font-size: 30px;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #0b666a, #35a29f);
+        color: white;
+    }
+
+    /* STATISTICS */
+
+    .stats-section {
+        background: #071952;
+        color: white;
+    }
+
+    .stat-number {
+        font-size: 2.7rem;
+        font-weight: 800;
+        color: #97feed;
+    }
+
+    /* USER ROLES */
+
+    .role-card {
+        border-radius: 25px;
+        padding: 35px;
+        transition: 0.3s;
+        height: 100%;
+        border: 1px solid #eeeeee;
+    }
+
+    .role-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    }
+
+    /* QUOTE SECTION */
+
+    .quote-section {
+        background: linear-gradient(135deg, #0b666a 0%, #071952 100%);
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .quote-section::after {
+        content: "\201C";
+        position: absolute;
+        font-family: Georgia, serif;
+        font-size: 14rem;
+        line-height: 1;
+        top: -40px;
+        left: 20px;
+        color: rgba(255, 255, 255, 0.06);
+    }
+
+    .quote-text {
+        font-size: 1.9rem;
+        font-weight: 700;
+        max-width: 780px;
+        margin: 0 auto;
+        line-height: 1.4;
+    }
+
+    .quote-author {
+        color: #97feed;
+        font-weight: 600;
+        margin-top: 18px;
+        display: block;
+    }
+
+    /* MOBILE RESPONSIVE */
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.7rem;
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+        }
+    }
+</style>
+
+
+<!-- HERO SECTION -->
+
+<section class="hero-section">
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-7">
+
+                <span class="badge bg-light text-dark rounded-pill px-3 py-2 mb-4">
+                    🚀 Smart Education Management Platform
+                </span>
+
+                <h1 class="hero-title">
+                    Transform Education With
+                    <span class="hero-highlight">Smart Technology.</span>
+                </h1>
+
+                <p class="hero-text mt-4">
+                    A modern College ERP platform designed to manage students,
+                    teachers, attendance, examinations, fees, courses, library
+                    resources and notices—all from one intelligent dashboard.
+                </p>
+
+                <div class="mt-5">
+
+                    {% if user.is_authenticated %}
+
+                        <a href="{% url 'dashboard' %}"
+                           class="btn btn-light btn-innovative me-3">
+
+                            <i class="fa-solid fa-chart-line"></i>
+                            Open Dashboard
+
+                        </a>
+
+                    {% else %}
+
+                        <a href="{% url 'login' %}"
+                           class="btn btn-light btn-innovative me-3">
+
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            Login to ERP
+
+                        </a>
+
+                    {% endif %}
+
+                    <a href="#features"
+                       class="btn btn-outline-light btn-innovative">
+
+                        Explore Features
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-5">
+
+                <div class="floating-card text-center">
+
+                    <i class="fa-solid fa-graduation-cap fa-5x mb-4"></i>
+
+                    <h2>SmartEdu ERP</h2>
+
+                    <p class="mt-3">
+                        One platform. Complete campus management.
+                    </p>
+
+                    <hr>
+
+                    <div class="row mt-4">
+
+                        <div class="col-4">
+                            <h3>{{ total_students|default:"0" }}</h3>
+                            <small>Students</small>
+                        </div>
+
+                        <div class="col-4">
+                            <h3>{{ total_teachers|default:"0" }}</h3>
+                            <small>Teachers</small>
+                        </div>
+
+                        <div class="col-4">
+                            <h3>{{ total_courses|default:"0" }}</h3>
+                            <small>Courses</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SHOWCASE BANNER -->
+
+<section class="showcase-banner">
+
+    <img
+        src="{% static 'home/images/hero-banner.png' %}"
+        alt="Odisha — Land of Legends, Heritage and Heroes | Student Management System"
+    >
+
+</section>
+
+
+<!-- QUICK MODULE STRIP -->
+
+<section class="module-strip py-4">
+
+    <div class="container">
+
+        <div class="row g-3">
+
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="module-pill">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>Students</span>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="module-pill">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <span>Teachers</span>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="module-pill">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Attendance</span>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="module-pill">
+                    <i class="fa-solid fa-file-pen"></i>
+                    <span>Exams</span>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="module-pill">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                    <span>Fees</span>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="module-pill">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Notices</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section id="features" class="py-5">
+
+    <div class="container py-5">
+
+        <div class="text-center mb-5">
+
+            <span class="text-primary fw-bold">
+                POWERFUL FEATURES
+            </span>
+
+            <h2 class="display-5 fw-bold mt-2">
+                Everything Your Institution Needs
+            </h2>
+
+            <p class="text-muted">
+                Manage your complete educational ecosystem from one platform.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+
+                    <h4>Student Management</h4>
+
+                    <p class="text-muted">
+                        Manage student profiles, academic information,
+                        departments and complete student records.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+
+                    <h4>Smart Attendance</h4>
+
+                    <p class="text-muted">
+                        Track daily attendance and analyse student participation
+                        with accurate digital records.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-chart-column"></i>
+                    </div>
+
+                    <h4>Analytics Dashboard</h4>
+
+                    <p class="text-muted">
+                        Get real-time insights into students, teachers,
+                        courses, fees and academic performance.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-file-pen"></i>
+                    </div>
+
+                    <h4>Examination System</h4>
+
+                    <p class="text-muted">
+                        Manage examinations, marks, results and academic
+                        performance efficiently.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                    </div>
+
+                    <h4>Fee Management</h4>
+
+                    <p class="text-muted">
+                        Manage payments, fee status and financial records
+                        through a centralised system.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+
+                    <h4>Digital Library</h4>
+
+                    <p class="text-muted">
+                        Organise books and library resources with a modern
+                        digital management experience.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STATISTICS -->
+
+<section class="stats-section py-5">
+
+    <div class="container py-4">
+
+        <div class="row text-center g-4">
+
+            <div class="col-md-3">
+
+                <div class="stat-number">
+                    {{ total_students|default:"0" }}+
+                </div>
+
+                <p>Students Managed</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="stat-number">
+                    {{ total_teachers|default:"0" }}+
+                </div>
+
+                <p>Expert Teachers</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="stat-number">
+                    {{ total_courses|default:"0" }}+
+                </div>
+
+                <p>Courses</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="stat-number">24/7</div>
+
+                <p>Digital Access</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- USER ROLES -->
+
+<section class="py-5 bg-light">
+
+    <div class="container py-5">
+
+        <div class="text-center mb-5">
+
+            <h2 class="display-5 fw-bold">
+                Designed for Everyone
+            </h2>
+
+            <p class="text-muted">
+                Personalised experiences for every member of your institution.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="role-card bg-white text-center">
+
+                    <i class="fa-solid fa-user-shield fa-4x text-danger mb-4"></i>
+
+                    <h3>Administrator</h3>
+
+                    <p class="text-muted">
+                        Complete control over students, teachers, courses,
+                        fees, examinations and system operations.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="role-card bg-white text-center">
+
+                    <i class="fa-solid fa-chalkboard-user fa-4x text-success mb-4"></i>
+
+                    <h3>Teacher</h3>
+
+                    <p class="text-muted">
+                        Manage attendance, academic records, examinations
+                        and student progress.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="role-card bg-white text-center">
+
+                    <i class="fa-solid fa-user-graduate fa-4x text-primary mb-4"></i>
+
+                    <h3>Student</h3>
+
+                    <p class="text-muted">
+                        Access academic records, attendance, examination
+                        results, notices and course information.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUOTE -->
+
+<section class="quote-section py-5">
+
+    <div class="container py-4 text-center">
+
+        <p class="quote-text">
+
+            Education is the most powerful weapon which you can use to
+            change the world.
+
+            <span class="quote-author">
+                — Nelson Mandela
+            </span>
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- CALL TO ACTION -->
+
+<section class="py-5 text-center">
+
+    <div class="container py-5">
+
+        <h2 class="display-5 fw-bold">
+            Ready to Transform Campus Management?
+        </h2>
+
+        <p class="lead text-muted mt-3">
+            Experience smarter, faster and more efficient education management.
+        </p>
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'dashboard' %}"
+               class="btn btn-primary btn-lg rounded-pill px-5 mt-3">
+
+                Open Dashboard
+
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}"
+               class="btn btn-primary btn-lg rounded-pill px-5 mt-3">
+
+                Get Started
+
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

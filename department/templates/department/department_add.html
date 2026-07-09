@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Add Department
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-primary text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-building"></i>
+
+            Add Department
+
+        </h1>
+
+        <p>Create a New Department</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+
+                Department Registration Form
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Department Name
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="department_name"
+                            class="form-control"
+                            placeholder="Enter Department Name"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Department Code
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="department_code"
+                            class="form-control"
+                            placeholder="Example: CSE101"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Head of Department (HOD)
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="hod"
+                            class="form-control"
+                            placeholder="Enter HOD Name"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Department Email
+
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="department@gmail.com">
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Contact Number
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            class="form-control"
+                            placeholder="Enter Phone Number">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Office Location
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            class="form-control"
+                            placeholder="Department Location">
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Total Teachers
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="total_teachers"
+                            class="form-control"
+                            placeholder="Total Teachers">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Total Students
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="total_students"
+                            class="form-control"
+                            placeholder="Total Students">
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Department Description
+
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="4"
+                        class="form-control"
+                        placeholder="Enter Department Description"></textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Department Image
+
+                    </label>
+
+                    <input
+                        type="file"
+                        name="photo"
+                        class="form-control">
+
+                </div>
+
+                <div class="text-center mt-4">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-lg">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Save Department
+
+                    </button>
+
+                    <a
+                        href="{% url 'department_list' %}"
+                        class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Department Profile
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-primary text-white py-5">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-building-columns"></i>
+
+            Department Profile
+
+        </h1>
+
+        <p>View Complete Department Information</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+
+                <i class="fa-solid fa-building"></i>
+
+                Department Details
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Department Image -->
+
+                <div class="col-md-4 text-center">
+
+                    {% if department.photo %}
+
+                    <img src="{{ department.photo.url }}"
+                         class="img-fluid rounded shadow"
+                         style="height:250px; width:250px; object-fit:cover;">
+
+                    {% else %}
+
+                    <img src="{% static 'images/department.png' %}"
+                         class="img-fluid rounded shadow"
+                         style="height:250px; width:250px; object-fit:cover;">
+
+                    {% endif %}
+
+                </div>
+
+                <!-- Department Information -->
+
+                <div class="col-md-8">
+
+                    <table class="table table-bordered table-hover">
+
+                        <tr>
+                            <th width="35%">Department ID</th>
+                            <td>{{ department.department_id }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Department Name</th>
+                            <td>{{ department.department_name }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Department Code</th>
+                            <td>{{ department.department_code }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Head of Department</th>
+                            <td>{{ department.hod }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ department.email }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Phone</th>
+                            <td>{{ department.phone }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Office Location</th>
+                            <td>{{ department.location }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Total Teachers</th>
+                            <td>{{ department.total_teachers }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Total Students</th>
+                            <td>{{ department.total_students }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Description</th>
+                            <td>{{ department.description }}</td>
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-footer text-center">
+
+            <a href="{% url 'department_update' department.department_id %}"
+               class="btn btn-warning btn-lg">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Edit
+
+            </a>
+
+            <a href="{% url 'department_delete' department.department_id %}"
+               class="btn btn-danger btn-lg">
+
+                <i class="fa-solid fa-trash"></i>
+
+                Delete
+
+            </a>
+
+            <a href="{% url 'department_list' %}"
+               class="btn btn-secondary btn-lg">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

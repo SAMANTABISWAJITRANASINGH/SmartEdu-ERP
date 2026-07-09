@@ -1,0 +1,290 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Update Student
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-warning text-dark py-4">
+    <div class="container text-center">
+        <h1>
+            <i class="fa-solid fa-user-pen"></i>
+            Update Student
+        </h1>
+        <p>Edit Student Information</p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+            <h3>Edit Student Details</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">First Name</label>
+
+                        <input type="text"
+                               class="form-control"
+                               name="first_name"
+                               value="{{ student.first_name }}"
+                               required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Last Name</label>
+
+                        <input type="text"
+                               class="form-control"
+                               name="last_name"
+                               value="{{ student.last_name }}"
+                               required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Gender</label>
+
+                        <select class="form-select" name="gender">
+
+                            <option value="Male"
+                                {% if student.gender == "Male" %}selected{% endif %}>
+                                Male
+                            </option>
+
+                            <option value="Female"
+                                {% if student.gender == "Female" %}selected{% endif %}>
+                                Female
+                            </option>
+
+                            <option value="Other"
+                                {% if student.gender == "Other" %}selected{% endif %}>
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Date of Birth</label>
+
+                        <input type="date"
+                               class="form-control"
+                               name="dob"
+                               value="{{ student.dob|date:'Y-m-d' }}">
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Email</label>
+
+                        <input type="email"
+                               class="form-control"
+                               name="email"
+                               value="{{ student.email }}">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Phone</label>
+
+                        <input type="text"
+                               class="form-control"
+                               name="phone"
+                               value="{{ student.phone }}">
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Address</label>
+
+                    <textarea
+                        class="form-control"
+                        rows="3"
+                        name="address">{{ student.address }}</textarea>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Department</label>
+
+                        <select class="form-select" name="department">
+
+                            <option value="Computer Science"
+                                {% if student.department == "Computer Science" %}selected{% endif %}>
+                                Computer Science
+                            </option>
+
+                            <option value="Information Technology"
+                                {% if student.department == "Information Technology" %}selected{% endif %}>
+                                Information Technology
+                            </option>
+
+                            <option value="Mechanical"
+                                {% if student.department == "Mechanical" %}selected{% endif %}>
+                                Mechanical
+                            </option>
+
+                            <option value="Electrical"
+                                {% if student.department == "Electrical" %}selected{% endif %}>
+                                Electrical
+                            </option>
+
+                            <option value="Civil"
+                                {% if student.department == "Civil" %}selected{% endif %}>
+                                Civil
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Course</label>
+
+                        <select class="form-select" name="course">
+
+                            <option value="MCA"
+                                {% if student.course == "MCA" %}selected{% endif %}>
+                                MCA
+                            </option>
+
+                            <option value="BCA"
+                                {% if student.course == "BCA" %}selected{% endif %}>
+                                BCA
+                            </option>
+
+                            <option value="B.Tech"
+                                {% if student.course == "B.Tech" %}selected{% endif %}>
+                                B.Tech
+                            </option>
+
+                            <option value="M.Tech"
+                                {% if student.course == "M.Tech" %}selected{% endif %}>
+                                M.Tech
+                            </option>
+
+                            <option value="B.Sc"
+                                {% if student.course == "B.Sc" %}selected{% endif %}>
+                                B.Sc
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Admission Date
+                        </label>
+
+                        <input
+                            type="date"
+                            class="form-control"
+                            name="admission_date"
+                            value="{{ student.admission_date|date:'Y-m-d' }}">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Student Photo
+                        </label>
+
+                        <input
+                            type="file"
+                            class="form-control"
+                            name="photo">
+
+                    </div>
+
+                </div>
+
+                {% if student.photo %}
+
+                <div class="mb-4 text-center">
+
+                    <img src="{{ student.photo.url }}"
+                         width="150"
+                         height="150"
+                         class="rounded-circle border shadow">
+
+                </div>
+
+                {% endif %}
+
+                <div class="text-center">
+
+                    <button type="submit"
+                            class="btn btn-warning btn-lg">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                        Update Student
+
+                    </button>
+
+                    <a href="{% url 'student_list' %}"
+                       class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

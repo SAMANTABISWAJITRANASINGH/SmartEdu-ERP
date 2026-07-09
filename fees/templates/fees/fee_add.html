@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Add Fee
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-primary text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-money-bill-wave"></i>
+
+            Fee Collection
+
+        </h1>
+
+        <p>Collect Student Fee</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>Student Fee Form</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Student
+
+                        </label>
+
+                        <select
+                            name="student"
+                            class="form-select"
+                            required>
+
+                            <option value="">Select Student</option>
+
+                            {% for student in students %}
+
+                            <option value="{{ student.student_id }}">
+
+                                {{ student.first_name }} {{ student.last_name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Department
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="department"
+                            class="form-control"
+                            placeholder="Department"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Course
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="course"
+                            class="form-control"
+                            placeholder="Course"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Fee Type
+
+                        </label>
+
+                        <select
+                            name="fee_type"
+                            class="form-select"
+                            required>
+
+                            <option value="">Select Fee Type</option>
+
+                            <option>Admission Fee</option>
+
+                            <option>Tuition Fee</option>
+
+                            <option>Examination Fee</option>
+
+                            <option>Library Fee</option>
+
+                            <option>Hostel Fee</option>
+
+                            <option>Transport Fee</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Total Amount
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="total_amount"
+                            class="form-control"
+                            placeholder="Total Fee"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Paid Amount
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="paid_amount"
+                            class="form-control"
+                            placeholder="Paid Amount"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Payment Date
+
+                        </label>
+
+                        <input
+                            type="date"
+                            name="payment_date"
+                            class="form-control"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Payment Method
+
+                        </label>
+
+                        <select
+                            name="payment_method"
+                            class="form-select"
+                            required>
+
+                            <option value="">Select Method</option>
+
+                            <option>Cash</option>
+
+                            <option>UPI</option>
+
+                            <option>Credit Card</option>
+
+                            <option>Debit Card</option>
+
+                            <option>Net Banking</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Payment Status
+
+                    </label>
+
+                    <select
+                        name="status"
+                        class="form-select"
+                        required>
+
+                        <option value="">Select Status</option>
+
+                        <option>Paid</option>
+
+                        <option>Pending</option>
+
+                        <option>Partial</option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+
+                        Remarks
+
+                    </label>
+
+                    <textarea
+                        name="remarks"
+                        rows="4"
+                        class="form-control"
+                        placeholder="Optional Remarks"></textarea>
+
+                </div>
+
+                <div class="text-center">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-lg">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Save Fee
+
+                    </button>
+
+                    <a
+                        href="{% url 'fee_list' %}"
+                        class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

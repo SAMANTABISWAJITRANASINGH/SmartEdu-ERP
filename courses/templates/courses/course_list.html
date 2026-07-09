@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Course List
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-primary text-white py-4">
+    <div class="container text-center">
+        <h1>
+            <i class="fa-solid fa-book-open"></i>
+            Course Management
+        </h1>
+        <p>View, Search, Update and Delete Courses</p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="text-primary">
+
+            Course List
+
+        </h2>
+
+        <a href="{% url 'course_add' %}" class="btn btn-primary">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Course
+
+        </a>
+
+    </div>
+
+    <!-- Search -->
+
+    <form method="GET" class="mb-4">
+
+        <div class="input-group">
+
+            <input
+                type="text"
+                name="search"
+                value="{{ request.GET.search }}"
+                class="form-control"
+                placeholder="Search Course">
+
+            <button class="btn btn-primary">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Search
+
+            </button>
+
+        </div>
+
+    </form>
+
+    <!-- Course Table -->
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h4>
+
+                Course Records
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover table-striped align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Image</th>
+
+                            <th>Course Name</th>
+
+                            <th>Course Code</th>
+
+                            <th>Department</th>
+
+                            <th>Duration</th>
+
+                            <th>Fees</th>
+
+                            <th>Total Seats</th>
+
+                            <th>Available Seats</th>
+
+                            <th>Coordinator</th>
+
+                            <th width="220">Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for course in courses %}
+
+                        <tr>
+
+                            <td>
+
+                                {{ course.course_id }}
+
+                            </td>
+
+                            <td>
+
+                                {% if course.photo %}
+
+                                <img src="{{ course.photo.url }}"
+                                     width="60"
+                                     height="60"
+                                     class="rounded">
+
+                                {% else %}
+
+                                <img src="{% static 'images/course.png' %}"
+                                     width="60"
+                                     height="60"
+                                     class="rounded">
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                {{ course.course_name }}
+
+                            </td>
+
+                            <td>
+
+                                {{ course.course_code }}
+
+                            </td>
+
+                            <td>
+
+                                {{ course.department }}
+
+                            </td>
+
+                            <td>
+
+                                {{ course.duration }}
+
+                            </td>
+
+                            <td>
+
+                                ₹ {{ course.fees }}
+
+                            </td>
+
+                            <td>
+
+                                {{ course.total_seats }}
+
+                            </td>
+
+                            <td>
+
+                                {{ course.available_seats }}
+
+                            </td>
+
+                            <td>
+
+                                {{ course.coordinator }}
+
+                            </td>
+
+                            <td>
+
+                                <a href="{% url 'course_profile' course.course_id %}"
+                                   class="btn btn-info btn-sm">
+
+                                    <i class="fa-solid fa-eye"></i>
+
+                                </a>
+
+                                <a href="{% url 'course_update' course.course_id %}"
+                                   class="btn btn-warning btn-sm">
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                </a>
+
+                                <a href="{% url 'course_delete' course.course_id %}"
+                                   class="btn btn-danger btn-sm">
+
+                                    <i class="fa-solid fa-trash"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td colspan="11" class="text-center text-danger">
+
+                                <h5>
+
+                                    No Course Records Found
+
+                                </h5>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

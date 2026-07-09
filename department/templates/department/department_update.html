@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Update Department
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-warning text-dark py-4">
+
+    <div class="container text-center">
+
+        <h1>
+            <i class="fa-solid fa-pen-to-square"></i>
+            Update Department
+        </h1>
+
+        <p>Edit Department Information</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>Update Department Details</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Department Name</label>
+
+                        <input
+                            type="text"
+                            name="department_name"
+                            class="form-control"
+                            value="{{ department.department_name }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Department Code</label>
+
+                        <input
+                            type="text"
+                            name="department_code"
+                            class="form-control"
+                            value="{{ department.department_code }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">HOD</label>
+
+                        <input
+                            type="text"
+                            name="hod"
+                            class="form-control"
+                            value="{{ department.hod }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Department Email</label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            value="{{ department.email }}">
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Phone</label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            class="form-control"
+                            value="{{ department.phone }}">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Office Location</label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            class="form-control"
+                            value="{{ department.location }}">
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Total Teachers</label>
+
+                        <input
+                            type="number"
+                            name="total_teachers"
+                            class="form-control"
+                            value="{{ department.total_teachers }}">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Total Students</label>
+
+                        <input
+                            type="number"
+                            name="total_students"
+                            class="form-control"
+                            value="{{ department.total_students }}">
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Description</label>
+
+                    <textarea
+                        name="description"
+                        class="form-control"
+                        rows="4">{{ department.description }}</textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Department Image</label>
+
+                    <input
+                        type="file"
+                        name="photo"
+                        class="form-control">
+
+                </div>
+
+                {% if department.photo %}
+
+                <div class="text-center mb-3">
+
+                    <img
+                        src="{{ department.photo.url }}"
+                        width="180"
+                        class="rounded shadow">
+
+                </div>
+
+                {% endif %}
+
+                <div class="text-center">
+
+                    <button
+                        type="submit"
+                        class="btn btn-warning btn-lg">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Update Department
+
+                    </button>
+
+                    <a
+                        href="{% url 'department_list' %}"
+                        class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

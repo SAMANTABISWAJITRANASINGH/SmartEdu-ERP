@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Course Profile
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-primary text-white py-5">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-book-open"></i>
+
+            Course Profile
+
+        </h1>
+
+        <p>View Complete Course Information</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+
+                <i class="fa-solid fa-book"></i>
+
+                Course Details
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Course Image -->
+
+                <div class="col-md-4 text-center">
+
+                    {% if course.photo %}
+
+                    <img src="{{ course.photo.url }}"
+                         class="img-fluid rounded shadow"
+                         style="height:250px; width:250px; object-fit:cover;">
+
+                    {% else %}
+
+                    <img src="{% static 'images/course.png' %}"
+                         class="img-fluid rounded shadow"
+                         style="height:250px; width:250px; object-fit:cover;">
+
+                    {% endif %}
+
+                </div>
+
+                <!-- Course Information -->
+
+                <div class="col-md-8">
+
+                    <table class="table table-bordered table-hover">
+
+                        <tr>
+
+                            <th width="35%">Course ID</th>
+
+                            <td>{{ course.course_id }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Course Name</th>
+
+                            <td>{{ course.course_name }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Course Code</th>
+
+                            <td>{{ course.course_code }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Department</th>
+
+                            <td>{{ course.department }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Duration</th>
+
+                            <td>{{ course.duration }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Fees</th>
+
+                            <td>₹ {{ course.fees }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Total Seats</th>
+
+                            <td>{{ course.total_seats }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Available Seats</th>
+
+                            <td>{{ course.available_seats }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Course Coordinator</th>
+
+                            <td>{{ course.coordinator }}</td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Description</th>
+
+                            <td>{{ course.description }}</td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-footer text-center">
+
+            <a href="{% url 'course_update' course.course_id %}"
+               class="btn btn-warning btn-lg">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Edit
+
+            </a>
+
+            <a href="{% url 'course_delete' course.course_id %}"
+               class="btn btn-danger btn-lg">
+
+                <i class="fa-solid fa-trash"></i>
+
+                Delete
+
+            </a>
+
+            <a href="{% url 'course_list' %}"
+               class="btn btn-secondary btn-lg">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

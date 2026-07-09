@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Update Book
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-warning text-dark py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-pen-to-square"></i>
+
+            Update Book
+
+        </h1>
+
+        <p>Edit Library Book Information</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>
+
+                Update Book
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Book Title
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="title"
+                            class="form-control"
+                            value="{{ book.title }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Author
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="author"
+                            class="form-control"
+                            value="{{ book.author }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Publisher
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="publisher"
+                            class="form-control"
+                            value="{{ book.publisher }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            ISBN
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="isbn"
+                            class="form-control"
+                            value="{{ book.isbn }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Category
+
+                        </label>
+
+                        <select
+                            name="category"
+                            class="form-select">
+
+                            <option value="Programming" {% if book.category == "Programming" %}selected{% endif %}>Programming</option>
+
+                            <option value="Computer Science" {% if book.category == "Computer Science" %}selected{% endif %}>Computer Science</option>
+
+                            <option value="Database" {% if book.category == "Database" %}selected{% endif %}>Database</option>
+
+                            <option value="Artificial Intelligence" {% if book.category == "Artificial Intelligence" %}selected{% endif %}>Artificial Intelligence</option>
+
+                            <option value="Networking" {% if book.category == "Networking" %}selected{% endif %}>Networking</option>
+
+                            <option value="Mathematics" {% if book.category == "Mathematics" %}selected{% endif %}>Mathematics</option>
+
+                            <option value="Science" {% if book.category == "Science" %}selected{% endif %}>Science</option>
+
+                            <option value="Novel" {% if book.category == "Novel" %}selected{% endif %}>Novel</option>
+
+                            <option value="General Knowledge" {% if book.category == "General Knowledge" %}selected{% endif %}>General Knowledge</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Edition
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="edition"
+                            class="form-control"
+                            value="{{ book.edition }}">
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Total Copies
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="total_copies"
+                            class="form-control"
+                            value="{{ book.total_copies }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Available Copies
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="available_copies"
+                            class="form-control"
+                            value="{{ book.available_copies }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Book Cover
+
+                    </label>
+
+                    {% if book.cover %}
+
+                    <br>
+
+                    <img src="{{ book.cover.url }}"
+                         width="100"
+                         class="mb-3 rounded">
+
+                    {% endif %}
+
+                    <input
+                        type="file"
+                        name="cover"
+                        class="form-control">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Description
+
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="4"
+                        class="form-control">{{ book.description }}</textarea>
+
+                </div>
+
+                <div class="text-center">
+
+                    <button
+                        type="submit"
+                        class="btn btn-warning btn-lg">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Update Book
+
+                    </button>
+
+                    <a
+                        href="{% url 'book_list' %}"
+                        class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

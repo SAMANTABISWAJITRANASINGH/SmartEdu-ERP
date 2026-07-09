@@ -1,0 +1,360 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-dark text-white py-5">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-gauge-high"></i>
+
+            Student Management Dashboard
+
+        </h1>
+
+        <p class="lead">
+
+            Welcome to College ERP Management System
+
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <!-- Statistics -->
+
+    <div class="row g-4">
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 bg-primary text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-user-graduate fa-3x mb-3"></i>
+
+                    <h2>{{ total_students }}</h2>
+
+                    <h5>Total Students</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 bg-success text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-chalkboard-user fa-3x mb-3"></i>
+
+                    <h2>{{ total_teachers }}</h2>
+
+                    <h5>Total Teachers</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 bg-warning">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-book fa-3x mb-3"></i>
+
+                    <h2>{{ total_courses }}</h2>
+
+                    <h5>Total Courses</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 bg-danger text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-building fa-3x mb-3"></i>
+
+                    <h2>{{ total_departments }}</h2>
+
+                    <h5>Total Departments</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row g-4 mt-2">
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 bg-info text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-money-bill-wave fa-3x mb-3"></i>
+
+                    <h2>{{ total_fees }}</h2>
+
+                    <h5>Fee Records</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 bg-secondary text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-book-open fa-3x mb-3"></i>
+
+                    <h2>{{ total_books }}</h2>
+
+                    <h5>Library Books</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 bg-dark text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-bullhorn fa-3x mb-3"></i>
+
+                    <h2>{{ total_notices }}</h2>
+
+                    <h5>Notice Board</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow border-0 bg-success text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="fa-solid fa-calendar-check fa-3x mb-3"></i>
+
+                    <h2>{{ total_attendance }}</h2>
+
+                    <h5>Attendance</h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Quick Links -->
+
+    <div class="card shadow mt-5">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+
+                Quick Navigation
+
+            </h3>
+
+        </div>
+
+        <div class="card-body text-center">
+
+            <a href="{% url 'student_list' %}" class="btn btn-primary m-2">
+
+                Students
+
+            </a>
+
+            <a href="{% url 'teacher_list' %}" class="btn btn-success m-2">
+
+                Teachers
+
+            </a>
+
+            <a href="{% url 'course_list' %}" class="btn btn-warning m-2">
+
+                Courses
+
+            </a>
+
+            <a href="{% url 'department_list' %}" class="btn btn-danger m-2">
+
+                Departments
+
+            </a>
+
+            <a href="{% url 'attendance_list' %}" class="btn btn-info m-2">
+
+                Attendance
+
+            </a>
+
+            <a href="{% url 'examination_list' %}" class="btn btn-secondary m-2">
+
+                Examination
+
+            </a>
+
+            <a href="{% url 'fee_list' %}" class="btn btn-dark m-2">
+
+                Fees
+
+            </a>
+
+            <a href="{% url 'book_list' %}" class="btn btn-primary m-2">
+
+                Library
+
+            </a>
+
+            <a href="{% url 'notice_list' %}" class="btn btn-success m-2">
+
+                Notice Board
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Recent Notices -->
+
+    <div class="card shadow mt-5">
+
+        <div class="card-header bg-success text-white">
+
+            <h3>
+
+                Latest Notices
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Title</th>
+
+                        <th>Category</th>
+
+                        <th>Date</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for notice in latest_notices %}
+
+                    <tr>
+
+                        <td>{{ notice.title }}</td>
+
+                        <td>{{ notice.category }}</td>
+
+                        <td>{{ notice.notice_date }}</td>
+
+                        <td>
+
+                            {% if notice.status == "Active" %}
+
+                            <span class="badge bg-success">
+
+                                Active
+
+                            </span>
+
+                            {% else %}
+
+                            <span class="badge bg-secondary">
+
+                                Inactive
+
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="4" class="text-center">
+
+                            No Notices Available
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

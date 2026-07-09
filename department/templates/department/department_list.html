@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Department List
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-success text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-building-columns"></i>
+
+            Department Management
+
+        </h1>
+
+        <p>View, Search, Update and Delete Departments</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="text-success">
+
+            Department List
+
+        </h2>
+
+        <a href="{% url 'department_add' %}" class="btn btn-success">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Department
+
+        </a>
+
+    </div>
+
+    <!-- Search -->
+
+    <form method="GET" class="mb-4">
+
+        <div class="input-group">
+
+            <input
+                type="text"
+                name="search"
+                value="{{ request.GET.search }}"
+                class="form-control"
+                placeholder="Search Department...">
+
+            <button class="btn btn-success">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Search
+
+            </button>
+
+        </div>
+
+    </form>
+
+    <!-- Department Table -->
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+
+            <h4>
+
+                Department Records
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover table-striped align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Image</th>
+
+                            <th>Department</th>
+
+                            <th>Code</th>
+
+                            <th>HOD</th>
+
+                            <th>Email</th>
+
+                            <th>Phone</th>
+
+                            <th>Teachers</th>
+
+                            <th>Students</th>
+
+                            <th width="220">Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for department in departments %}
+
+                        <tr>
+
+                            <td>{{ department.department_id }}</td>
+
+                            <td>
+
+                                {% if department.photo %}
+
+                                <img src="{{ department.photo.url }}"
+                                     width="60"
+                                     height="60"
+                                     class="rounded">
+
+                                {% else %}
+
+                                <img src="{% static 'images/department.png' %}"
+                                     width="60"
+                                     height="60"
+                                     class="rounded">
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>{{ department.department_name }}</td>
+
+                            <td>{{ department.department_code }}</td>
+
+                            <td>{{ department.hod }}</td>
+
+                            <td>{{ department.email }}</td>
+
+                            <td>{{ department.phone }}</td>
+
+                            <td>{{ department.total_teachers }}</td>
+
+                            <td>{{ department.total_students }}</td>
+
+                            <td>
+
+                                <a href="{% url 'department_profile' department.department_id %}"
+                                   class="btn btn-info btn-sm">
+
+                                    <i class="fa-solid fa-eye"></i>
+
+                                </a>
+
+                                <a href="{% url 'department_update' department.department_id %}"
+                                   class="btn btn-warning btn-sm">
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                </a>
+
+                                <a href="{% url 'department_delete' department.department_id %}"
+                                   class="btn btn-danger btn-sm">
+
+                                    <i class="fa-solid fa-trash"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td colspan="10" class="text-center text-danger">
+
+                                <h5>
+
+                                    No Department Records Found
+
+                                </h5>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

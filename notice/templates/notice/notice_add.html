@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Add Notice
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-primary text-white py-4">
+    <div class="container text-center">
+
+        <h1>
+            <i class="fa-solid fa-bullhorn"></i>
+            Add Notice
+        </h1>
+
+        <p>Create a New Notice for Students and Staff</p>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>Notice Information</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+
+                    <label class="form-label">Notice Title</label>
+
+                    <input type="text"
+                           name="title"
+                           class="form-control"
+                           placeholder="Enter Notice Title"
+                           required>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Category</label>
+
+                        <select name="category"
+                                class="form-select"
+                                required>
+
+                            <option value="">Select Category</option>
+                            <option>General</option>
+                            <option>Examination</option>
+                            <option>Holiday</option>
+                            <option>Placement</option>
+                            <option>Event</option>
+                            <option>Admission</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Status</label>
+
+                        <select name="status"
+                                class="form-select"
+                                required>
+
+                            <option>Active</option>
+                            <option>Inactive</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Notice Date</label>
+
+                        <input type="date"
+                               name="notice_date"
+                               class="form-control"
+                               required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Expiry Date</label>
+
+                        <input type="date"
+                               name="expiry_date"
+                               class="form-control"
+                               required>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Attachment</label>
+
+                    <input type="file"
+                           name="attachment"
+                           class="form-control">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Description</label>
+
+                    <textarea name="description"
+                              rows="6"
+                              class="form-control"
+                              placeholder="Write Notice Details..."
+                              required></textarea>
+
+                </div>
+
+                <div class="text-center">
+
+                    <button type="submit"
+                            class="btn btn-primary btn-lg">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Save Notice
+
+                    </button>
+
+                    <a href="{% url 'notice_list' %}"
+                       class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

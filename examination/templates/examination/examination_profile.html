@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Examination Profile
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-primary text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-file-lines"></i>
+
+            Examination Details
+
+        </h1>
+
+        <p>Complete Examination Information</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+
+                Examination Profile
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-striped">
+
+                <tr>
+
+                    <th width="30%">Exam ID</th>
+
+                    <td>{{ examination.exam_id }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Student Name</th>
+
+                    <td>
+
+                        {{ examination.student.first_name }}
+                        {{ examination.student.last_name }}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Department</th>
+
+                    <td>{{ examination.department }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Course</th>
+
+                    <td>{{ examination.course }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Subject</th>
+
+                    <td>{{ examination.subject }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Exam Date</th>
+
+                    <td>{{ examination.exam_date }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Total Marks</th>
+
+                    <td>{{ examination.total_marks }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Obtained Marks</th>
+
+                    <td>{{ examination.obtained_marks }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Percentage</th>
+
+                    <td>
+
+                        {{ examination.obtained_marks }}/{{ examination.total_marks }}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Grade</th>
+
+                    <td>
+
+                        <span class="badge bg-info">
+
+                            {{ examination.grade }}
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Result</th>
+
+                    <td>
+
+                        {% if examination.result == "Pass" %}
+
+                        <span class="badge bg-success">
+
+                            PASS
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-danger">
+
+                            FAIL
+
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Remarks</th>
+
+                    <td>{{ examination.remarks }}</td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="card-footer text-center">
+
+            <a href="{% url 'examination_update' examination.exam_id %}"
+               class="btn btn-warning">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Update
+
+            </a>
+
+            <a href="{% url 'examination_delete' examination.exam_id %}"
+               class="btn btn-danger">
+
+                <i class="fa-solid fa-trash"></i>
+
+                Delete
+
+            </a>
+
+            <a href="{% url 'examination_list' %}"
+               class="btn btn-secondary">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

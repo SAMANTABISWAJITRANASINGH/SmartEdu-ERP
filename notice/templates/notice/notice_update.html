@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Update Notice
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-warning text-dark py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-pen-to-square"></i>
+
+            Update Notice
+
+        </h1>
+
+        <p>Edit Notice Information</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>
+
+                Update Notice
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Notice Title
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="title"
+                        class="form-control"
+                        value="{{ notice.title }}"
+                        required>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Category
+
+                        </label>
+
+                        <select
+                            name="category"
+                            class="form-select">
+
+                            <option value="General" {% if notice.category == "General" %}selected{% endif %}>General</option>
+
+                            <option value="Examination" {% if notice.category == "Examination" %}selected{% endif %}>Examination</option>
+
+                            <option value="Holiday" {% if notice.category == "Holiday" %}selected{% endif %}>Holiday</option>
+
+                            <option value="Placement" {% if notice.category == "Placement" %}selected{% endif %}>Placement</option>
+
+                            <option value="Event" {% if notice.category == "Event" %}selected{% endif %}>Event</option>
+
+                            <option value="Admission" {% if notice.category == "Admission" %}selected{% endif %}>Admission</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Status
+
+                        </label>
+
+                        <select
+                            name="status"
+                            class="form-select">
+
+                            <option value="Active" {% if notice.status == "Active" %}selected{% endif %}>Active</option>
+
+                            <option value="Inactive" {% if notice.status == "Inactive" %}selected{% endif %}>Inactive</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Notice Date
+
+                        </label>
+
+                        <input
+                            type="date"
+                            name="notice_date"
+                            class="form-control"
+                            value="{{ notice.notice_date|date:'Y-m-d' }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Expiry Date
+
+                        </label>
+
+                        <input
+                            type="date"
+                            name="expiry_date"
+                            class="form-control"
+                            value="{{ notice.expiry_date|date:'Y-m-d' }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Current Attachment
+
+                    </label>
+
+                    {% if notice.attachment %}
+
+                        <p>
+
+                            <a href="{{ notice.attachment.url }}" target="_blank">
+
+                                View Attachment
+
+                            </a>
+
+                        </p>
+
+                    {% else %}
+
+                        <p>No attachment uploaded.</p>
+
+                    {% endif %}
+
+                    <input
+                        type="file"
+                        name="attachment"
+                        class="form-control">
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Description
+
+                    </label>
+
+                    <textarea
+                        name="description"
+                        rows="6"
+                        class="form-control"
+                        required>{{ notice.description }}</textarea>
+
+                </div>
+
+                <div class="text-center">
+
+                    <button
+                        type="submit"
+                        class="btn btn-warning btn-lg">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Update Notice
+
+                    </button>
+
+                    <a
+                        href="{% url 'notice_list' %}"
+                        class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

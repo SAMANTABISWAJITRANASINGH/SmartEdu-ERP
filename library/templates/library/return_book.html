@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Return Book
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-success text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-book-open"></i>
+
+            Return Book
+
+        </h1>
+
+        <p>Return Issued Library Book</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+
+            <h3>
+
+                Book Return Form
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Student
+
+                        </label>
+
+                        <select
+                            name="student"
+                            class="form-select"
+                            required>
+
+                            {% for student in students %}
+
+                            <option value="{{ student.student_id }}">
+
+                                {{ student.first_name }}
+                                {{ student.last_name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Book
+
+                        </label>
+
+                        <select
+                            name="book"
+                            class="form-select"
+                            required>
+
+                            {% for book in books %}
+
+                            <option value="{{ book.book_id }}">
+
+                                {{ book.title }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Issue Date
+
+                        </label>
+
+                        <input
+                            type="date"
+                            name="issue_date"
+                            class="form-control"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Return Date
+
+                        </label>
+
+                        <input
+                            type="date"
+                            name="return_date"
+                            class="form-control"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Fine Amount (₹)
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="fine"
+                            class="form-control"
+                            value="0">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Return Status
+
+                        </label>
+
+                        <select
+                            name="status"
+                            class="form-select"
+                            required>
+
+                            <option value="Returned">
+
+                                Returned
+
+                            </option>
+
+                            <option value="Late Return">
+
+                                Late Return
+
+                            </option>
+
+                            <option value="Lost">
+
+                                Lost Book
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Remarks
+
+                    </label>
+
+                    <textarea
+                        name="remarks"
+                        rows="4"
+                        class="form-control"
+                        placeholder="Enter Remarks"></textarea>
+
+                </div>
+
+                <div class="text-center">
+
+                    <button
+                        type="submit"
+                        class="btn btn-success btn-lg">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Return Book
+
+                    </button>
+
+                    <a
+                        href="{% url 'book_list' %}"
+                        class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

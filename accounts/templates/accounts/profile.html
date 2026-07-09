@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-primary text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-user"></i>
+
+            My Profile
+
+        </h1>
+
+        <p>
+
+            User Account Information
+
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h3>
+
+                        Profile Details
+
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-bordered">
+
+                        <tr>
+
+                            <th width="35%">
+
+                                Username
+
+                            </th>
+
+                            <td>
+
+                                {{ user.username }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                First Name
+
+                            </th>
+
+                            <td>
+
+                                {{ user.first_name }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Last Name
+
+                            </th>
+
+                            <td>
+
+                                {{ user.last_name }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Email
+
+                            </th>
+
+                            <td>
+
+                                {{ user.email }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Staff Status
+
+                            </th>
+
+                            <td>
+
+                                {% if user.is_staff %}
+
+                                <span class="badge bg-success">
+
+                                    Staff
+
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-secondary">
+
+                                    User
+
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Superuser
+
+                            </th>
+
+                            <td>
+
+                                {% if user.is_superuser %}
+
+                                <span class="badge bg-danger">
+
+                                    Admin
+
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-secondary">
+
+                                    No
+
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Last Login
+
+                            </th>
+
+                            <td>
+
+                                {{ user.last_login }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Date Joined
+
+                            </th>
+
+                            <td>
+
+                                {{ user.date_joined }}
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+                <div class="card-footer text-center">
+
+                    <a href="{% url 'change_password' %}"
+                       class="btn btn-warning">
+
+                        <i class="fa-solid fa-key"></i>
+
+                        Change Password
+
+                    </a>
+
+                    <a href="{% url 'dashboard' %}"
+                       class="btn btn-primary">
+
+                        <i class="fa-solid fa-house"></i>
+
+                        Dashboard
+
+                    </a>
+
+                    <a href="{% url 'logout' %}"
+                       class="btn btn-danger">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        Logout
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

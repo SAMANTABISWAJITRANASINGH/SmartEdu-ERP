@@ -1,0 +1,1162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Student List | SmartEdu ERP
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+    /* =====================================================
+       PAGE BACKGROUND
+    ===================================================== */
+
+    body {
+        background: #eef4f8;
+    }
+
+    .student-page {
+        min-height: 100vh;
+
+        background-image:
+            linear-gradient(
+                rgba(239, 247, 252, 0.78),
+                rgba(239, 247, 252, 0.88)
+            ),
+            url("{% static 'home/images/odisha_banner.png' %}");
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+
+        padding: 35px 0 60px;
+    }
+
+
+    /* =====================================================
+       HERO SECTION
+    ===================================================== */
+
+    .student-hero {
+        background-image:
+            linear-gradient(
+                90deg,
+                rgba(7, 47, 87, 0.91),
+                rgba(13, 110, 253, 0.75)
+            ),
+            url("{% static 'home/images/odisha_banner.png' %}");
+
+        background-size: cover;
+        background-position: center 42%;
+        background-repeat: no-repeat;
+
+        color: white;
+
+        padding: 34px 20px;
+
+        text-align: center;
+
+        border-bottom:
+            1px solid rgba(255, 255, 255, 0.25);
+    }
+
+
+    .student-hero h1 {
+        font-size: clamp(2rem, 4vw, 3.2rem);
+
+        font-weight: 800;
+
+        margin: 0 0 8px;
+
+        letter-spacing: -1px;
+
+        text-shadow:
+            0 3px 12px rgba(0, 0, 0, 0.28);
+    }
+
+
+    .student-hero p {
+        margin: 0;
+
+        font-size: 1.1rem;
+
+        opacity: 0.92;
+    }
+
+
+    /* =====================================================
+       MAIN CONTENT
+    ===================================================== */
+
+    .student-content {
+        max-width: 1400px;
+    }
+
+
+    /* =====================================================
+       STUDENT CARD
+    ===================================================== */
+
+    .student-card {
+        background: rgba(255, 255, 255, 0.94);
+
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+
+        border-radius: 16px;
+
+        overflow: hidden;
+
+        border:
+            1px solid rgba(255, 255, 255, 0.85);
+
+        box-shadow:
+            0 15px 45px rgba(21, 52, 80, 0.15);
+    }
+
+
+    /* =====================================================
+       CARD HEADER
+    ===================================================== */
+
+    .student-card-header {
+        background:
+            linear-gradient(
+                135deg,
+                #0b6e4f,
+                #198754
+            );
+
+        color: white;
+
+        padding: 18px 25px;
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+    }
+
+
+    .student-card-header h3 {
+        margin: 0;
+
+        font-size: 1.55rem;
+
+        font-weight: 700;
+    }
+
+
+    .student-card-header .btn {
+        border: 0;
+
+        border-radius: 9px;
+
+        padding: 10px 17px;
+
+        font-weight: 600;
+
+        box-shadow:
+            0 3px 10px rgba(0, 0, 0, 0.12);
+    }
+
+
+    /* =====================================================
+       CARD BODY
+    ===================================================== */
+
+    .student-card-body {
+        padding: 26px;
+    }
+
+
+    /* =====================================================
+       SEARCH INPUT
+    ===================================================== */
+
+    .student-search-input {
+        height: 52px;
+
+        border-radius: 10px;
+
+        border: 1px solid #d7e0e7;
+
+        font-size: 1rem;
+
+        padding-left: 17px;
+    }
+
+
+    .student-search-input:focus {
+        border-color: #0d6efd;
+
+        box-shadow:
+            0 0 0 4px rgba(13, 110, 253, 0.10);
+    }
+
+
+    /* =====================================================
+       SEARCH / VOICE BUTTONS
+    ===================================================== */
+
+    .search-control-button {
+        height: 52px;
+
+        border-radius: 10px;
+
+        font-weight: 600;
+
+        white-space: nowrap;
+    }
+
+
+    #voiceButton.listening {
+        animation: voicePulse 1.2s infinite;
+    }
+
+
+    @keyframes voicePulse {
+
+        0% {
+            box-shadow:
+                0 0 0 0 rgba(220, 53, 69, 0.7);
+        }
+
+        70% {
+            box-shadow:
+                0 0 0 12px rgba(220, 53, 69, 0);
+        }
+
+        100% {
+            box-shadow:
+                0 0 0 0 rgba(220, 53, 69, 0);
+        }
+    }
+
+
+    /* =====================================================
+       VOICE STATUS
+    ===================================================== */
+
+    #voiceStatus {
+        display: none;
+    }
+
+
+    .voice-status-box {
+        border-radius: 10px;
+
+        padding: 12px 18px;
+
+        font-weight: 600;
+    }
+
+
+    /* =====================================================
+       TABLE WRAPPER
+    ===================================================== */
+
+    .student-table-wrapper {
+        width: 100%;
+
+        overflow-x: auto;
+
+        border-radius: 11px;
+
+        border: 1px solid #dee5eb;
+    }
+
+
+    /* =====================================================
+       STUDENT TABLE
+    ===================================================== */
+
+    .student-table {
+        margin: 0;
+
+        background: white;
+    }
+
+
+    .student-table thead th {
+        background: #17212b;
+
+        color: white;
+
+        padding: 15px 12px;
+
+        font-size: 0.92rem;
+
+        font-weight: 600;
+
+        text-align: center;
+
+        vertical-align: middle;
+
+        white-space: nowrap;
+    }
+
+
+    .student-table tbody td {
+        padding: 13px 10px;
+
+        vertical-align: middle;
+
+        text-align: center;
+
+        color: #334155;
+    }
+
+
+    .student-table tbody tr:hover {
+        background: #f1f7ff;
+    }
+
+
+    /* =====================================================
+       STUDENT PHOTO
+    ===================================================== */
+
+    .student-photo {
+        width: 52px;
+
+        height: 52px;
+
+        object-fit: cover;
+
+        border-radius: 50%;
+
+        border: 3px solid white;
+
+        box-shadow:
+            0 2px 8px rgba(0, 0, 0, 0.18);
+    }
+
+
+    /* =====================================================
+       ACTION BUTTONS
+    ===================================================== */
+
+    .student-actions {
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        gap: 6px;
+    }
+
+
+    .student-actions .btn {
+        width: 34px;
+
+        height: 34px;
+
+        padding: 0;
+
+        display: inline-flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        border-radius: 7px;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media (max-width: 768px) {
+
+        .student-page {
+            padding: 20px 10px 40px;
+
+            background-attachment: scroll;
+        }
+
+
+        .student-hero {
+            padding: 28px 15px;
+        }
+
+
+        .student-hero h1 {
+            font-size: 2rem;
+        }
+
+
+        .student-card-header {
+            flex-direction: column;
+
+            gap: 14px;
+
+            text-align: center;
+        }
+
+
+        .student-card-body {
+            padding: 16px;
+        }
+    }
+
+</style>
+
+{% endblock %}
+
+
+
+{% block hero %}
+
+<section class="student-hero">
+
+    <div class="container">
+
+        <h1>
+
+            <i class="fa-solid fa-users me-2"></i>
+
+            Student Management
+
+        </h1>
+
+
+        <p>
+
+            View, Search, Update and Delete Student Records
+
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<section class="student-page">
+
+    <div class="container student-content">
+
+        <div class="student-card">
+
+
+            <!-- =====================================================
+                 CARD HEADER
+            ====================================================== -->
+
+            <div class="student-card-header">
+
+                <h3>
+
+                    <i class="fa-solid fa-graduation-cap me-2"></i>
+
+                    Student List
+
+                </h3>
+
+
+                <a
+                    href="{% url 'student_add' %}"
+                    class="btn btn-light fw-semibold">
+
+                    <i class="fa-solid fa-user-plus me-1"></i>
+
+                    Add Student
+
+                </a>
+
+            </div>
+
+
+
+            <!-- =====================================================
+                 CARD BODY
+            ====================================================== -->
+
+            <div class="student-card-body">
+
+
+                <!-- =================================================
+                     SEARCH + VOICE FORM
+                ================================================== -->
+
+                <form
+                    method="GET"
+                    action="{% url 'student_list' %}"
+                    id="studentSearchForm"
+                    class="row g-2 mb-3 align-items-center">
+
+
+                    <!-- SEARCH INPUT -->
+
+                    <div class="col-lg-7 col-md-6">
+
+                        <input
+                            type="text"
+                            id="studentSearch"
+                            name="search"
+                            value="{{ search_query|default:'' }}"
+                            class="form-control form-control-lg student-search-input"
+                            placeholder="Type or say: Show me Swadhin's data"
+                            autocomplete="off">
+
+                    </div>
+
+
+                    <!-- VOICE BUTTON -->
+
+                    <div class="col-lg-2 col-md-2">
+
+                        <button
+                            type="button"
+                            id="voiceButton"
+                            class="btn btn-danger btn-lg w-100 search-control-button">
+
+                            <i
+                                id="microphoneIcon"
+                                class="fa-solid fa-microphone me-1">
+                            </i>
+
+                            Voice
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- SEARCH BUTTON -->
+
+                    <div class="col-lg-2 col-md-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-lg w-100 search-control-button">
+
+                            <i class="fa-solid fa-magnifying-glass me-1"></i>
+
+                            Search
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- RESTORE ALL BUTTON -->
+
+                    <div class="col-lg-1 col-md-2">
+
+                        <a
+                            href="{% url 'student_list' %}"
+                            class="btn btn-secondary btn-lg w-100 search-control-button d-flex justify-content-center align-items-center"
+                            title="Restore all student records">
+
+                            <i class="fa-solid fa-rotate-right"></i>
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+
+
+                <!-- =================================================
+                     VOICE STATUS
+                ================================================== -->
+
+                <div
+                    id="voiceStatus"
+                    class="mb-4">
+
+                    <div
+                        id="voiceStatusContent"
+                        class="alert alert-info text-center voice-status-box mb-0">
+
+                        <i class="fa-solid fa-microphone me-2"></i>
+
+                        Ready for voice command.
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     BACKEND MESSAGE
+                ================================================== -->
+
+                {% if voice_message %}
+
+                    <div class="alert alert-info text-center mb-4">
+
+                        <i class="fa-solid fa-circle-info me-2"></i>
+
+                        {{ voice_message }}
+
+                    </div>
+
+                {% endif %}
+
+
+
+                <!-- =================================================
+                     STUDENT TABLE
+                ================================================== -->
+
+                <div class="student-table-wrapper">
+
+                    <table class="table table-bordered table-hover table-striped student-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Photo</th>
+
+                                <th>Name</th>
+
+                                <th>Gender</th>
+
+                                <th>Email</th>
+
+                                <th>Phone</th>
+
+                                <th>Department</th>
+
+                                <th>Course</th>
+
+                                <th>Admission</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for student in students %}
+
+                                <tr>
+
+                                    <td>
+
+                                        {{ student.student_id }}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {% if student.photo %}
+
+                                            <img
+                                                src="{{ student.photo.url }}"
+                                                alt="{{ student.first_name }} {{ student.last_name }}"
+                                                class="student-photo">
+
+                                        {% else %}
+
+                                            <div
+                                                class="student-photo d-flex align-items-center justify-content-center bg-secondary text-white mx-auto">
+
+                                                <i class="fa-solid fa-user"></i>
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <strong>
+
+                                            {{ student.first_name }}
+
+                                            {{ student.last_name }}
+
+                                        </strong>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {{ student.gender }}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {{ student.email }}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {{ student.phone }}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {{ student.department }}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {{ student.course }}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {{ student.admission_date }}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="student-actions">
+
+
+                                            <!-- VIEW -->
+
+                                            <a
+                                                href="{% url 'student_profile' student.student_id %}"
+                                                class="btn btn-info btn-sm"
+                                                title="View Student">
+
+                                                <i class="fa-solid fa-eye"></i>
+
+                                            </a>
+
+
+                                            <!-- UPDATE -->
+
+                                            <a
+                                                href="{% url 'student_update' student.student_id %}"
+                                                class="btn btn-warning btn-sm"
+                                                title="Update Student">
+
+                                                <i class="fa-solid fa-pen"></i>
+
+                                            </a>
+
+
+                                            <!-- DELETE -->
+
+                                            <a
+                                                href="{% url 'student_delete' student.student_id %}"
+                                                class="btn btn-danger btn-sm"
+                                                title="Delete Student">
+
+                                                <i class="fa-solid fa-trash"></i>
+
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+
+                            {% empty %}
+
+
+                                <tr>
+
+                                    <td
+                                        colspan="10"
+                                        class="text-center py-5">
+
+                                        <i
+                                            class="fa-solid fa-users-slash fa-3x text-secondary mb-3">
+                                        </i>
+
+
+                                        <h4 class="text-danger">
+
+                                            No Student Records Found
+
+                                        </h4>
+
+
+                                        <p class="text-muted">
+
+                                            Try another name or say:
+
+                                            <strong>
+                                                "Show me Swadhin's data"
+                                            </strong>
+
+                                        </p>
+
+
+                                        <a
+                                            href="{% url 'student_list' %}"
+                                            class="btn btn-secondary me-2">
+
+                                            <i class="fa-solid fa-rotate-right me-1"></i>
+
+                                            Restore All
+
+                                        </a>
+
+
+                                        <a
+                                            href="{% url 'student_add' %}"
+                                            class="btn btn-success">
+
+                                            <i class="fa-solid fa-user-plus me-1"></i>
+
+                                            Add Student
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // =====================================================
+    // GET HTML ELEMENTS
+    // =====================================================
+
+    const voiceButton =
+        document.getElementById("voiceButton");
+
+    const microphoneIcon =
+        document.getElementById("microphoneIcon");
+
+    const searchInput =
+        document.getElementById("studentSearch");
+
+    const searchForm =
+        document.getElementById("studentSearchForm");
+
+    const voiceStatus =
+        document.getElementById("voiceStatus");
+
+    const voiceStatusContent =
+        document.getElementById("voiceStatusContent");
+
+
+    // =====================================================
+    // CHECK SPEECH RECOGNITION SUPPORT
+    // =====================================================
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if (!SpeechRecognition) {
+
+        voiceButton.disabled = true;
+
+        voiceButton.innerHTML = `
+            <i class="fa-solid fa-microphone-slash me-1"></i>
+            Unsupported
+        `;
+
+        voiceStatus.style.display = "block";
+
+        voiceStatusContent.className =
+            "alert alert-warning text-center voice-status-box mb-0";
+
+        voiceStatusContent.innerHTML = `
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+            Voice recognition is not supported in this browser.
+            Please use Google Chrome.
+        `;
+
+        return;
+    }
+
+
+    // =====================================================
+    // CREATE SPEECH RECOGNITION OBJECT
+    // =====================================================
+
+    const recognition =
+        new SpeechRecognition();
+
+
+    recognition.lang = "en-IN";
+
+    recognition.continuous = false;
+
+    recognition.interimResults = false;
+
+    recognition.maxAlternatives = 1;
+
+
+    // =====================================================
+    // CLICK VOICE BUTTON
+    // =====================================================
+
+    voiceButton.addEventListener(
+        "click",
+        function () {
+
+            try {
+
+                recognition.start();
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Voice recognition is already active."
+                );
+
+            }
+
+        }
+    );
+
+
+    // =====================================================
+    // START LISTENING
+    // =====================================================
+
+    recognition.onstart = function () {
+
+        voiceStatus.style.display = "block";
+
+
+        voiceStatusContent.className =
+            "alert alert-danger text-center voice-status-box mb-0";
+
+
+        voiceStatusContent.innerHTML = `
+
+            <i class="fa-solid fa-microphone fa-beat me-2"></i>
+
+            <strong>Listening...</strong>
+
+            Say:
+
+            <strong>
+                "Show me Swadhin's data"
+            </strong>
+
+        `;
+
+
+        voiceButton.classList.add("listening");
+
+
+        microphoneIcon.classList.add("fa-beat");
+
+    };
+
+
+    // =====================================================
+    // VOICE RESULT
+    // =====================================================
+
+    recognition.onresult = function (event) {
+
+        const spokenText =
+            event.results[0][0].transcript.trim();
+
+
+        console.log(
+            "Voice command:",
+            spokenText
+        );
+
+
+        // Put voice command into input box
+        searchInput.value = spokenText;
+
+
+        // Show recognized voice text
+        voiceStatus.style.display = "block";
+
+
+        voiceStatusContent.className =
+            "alert alert-success text-center voice-status-box mb-0";
+
+
+        voiceStatusContent.innerHTML = `
+
+            <i class="fa-solid fa-circle-check me-2"></i>
+
+            You said:
+
+            <strong>
+                ${escapeHTML(spokenText)}
+            </strong>
+
+            <br>
+
+            Searching student database...
+
+        `;
+
+
+        // Automatically submit after 800 milliseconds
+        setTimeout(
+            function () {
+
+                searchForm.submit();
+
+            },
+            800
+        );
+
+    };
+
+
+    // =====================================================
+    // RECOGNITION ENDED
+    // =====================================================
+
+    recognition.onend = function () {
+
+        voiceButton.classList.remove("listening");
+
+        microphoneIcon.classList.remove("fa-beat");
+
+    };
+
+
+    // =====================================================
+    // ERROR HANDLING
+    // =====================================================
+
+    recognition.onerror = function (event) {
+
+        let errorMessage =
+            "Voice recognition failed. Please try again.";
+
+
+        if (event.error === "not-allowed") {
+
+            errorMessage =
+                "Microphone permission denied. Please allow microphone access in Chrome.";
+
+        }
+
+
+        else if (event.error === "no-speech") {
+
+            errorMessage =
+                "No voice was detected. Click Voice and speak again.";
+
+        }
+
+
+        else if (event.error === "audio-capture") {
+
+            errorMessage =
+                "No microphone was detected on this device.";
+
+        }
+
+
+        else if (event.error === "network") {
+
+            errorMessage =
+                "Voice recognition network error. Please check your internet connection.";
+
+        }
+
+
+        voiceStatus.style.display = "block";
+
+
+        voiceStatusContent.className =
+            "alert alert-warning text-center voice-status-box mb-0";
+
+
+        voiceStatusContent.innerHTML = `
+
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+
+            ${errorMessage}
+
+        `;
+
+
+        voiceButton.classList.remove("listening");
+
+        microphoneIcon.classList.remove("fa-beat");
+
+    };
+
+
+    // =====================================================
+    // SAFE HTML DISPLAY
+    // =====================================================
+
+    function escapeHTML(text) {
+
+        const element =
+            document.createElement("div");
+
+        element.textContent = text;
+
+        return element.innerHTML;
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

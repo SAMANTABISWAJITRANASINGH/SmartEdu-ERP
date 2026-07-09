@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Fee List
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-success text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-money-check-dollar"></i>
+
+            Fee Management
+
+        </h1>
+
+        <p>View, Search, Update and Manage Student Fees</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="text-success">
+
+            Fee Records
+
+        </h2>
+
+        <a href="{% url 'fee_add' %}" class="btn btn-success">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Collect Fee
+
+        </a>
+
+    </div>
+
+    <!-- Search -->
+
+    <form method="GET" class="mb-4">
+
+        <div class="input-group">
+
+            <input
+                type="text"
+                name="search"
+                value="{{ request.GET.search }}"
+                class="form-control"
+                placeholder="Search Student / Department">
+
+            <button class="btn btn-success">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Search
+
+            </button>
+
+        </div>
+
+    </form>
+
+    <!-- Fee Table -->
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+
+            <h4>
+
+                Student Fee Details
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover table-striped">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Student</th>
+
+                            <th>Department</th>
+
+                            <th>Course</th>
+
+                            <th>Fee Type</th>
+
+                            <th>Total</th>
+
+                            <th>Paid</th>
+
+                            <th>Status</th>
+
+                            <th>Payment Date</th>
+
+                            <th width="230">
+
+                                Action
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for fee in fees %}
+
+                        <tr>
+
+                            <td>{{ fee.fee_id }}</td>
+
+                            <td>
+
+                                {{ fee.student.first_name }}
+                                {{ fee.student.last_name }}
+
+                            </td>
+
+                            <td>{{ fee.department }}</td>
+
+                            <td>{{ fee.course }}</td>
+
+                            <td>{{ fee.fee_type }}</td>
+
+                            <td>₹ {{ fee.total_amount }}</td>
+
+                            <td>₹ {{ fee.paid_amount }}</td>
+
+                            <td>
+
+                                {% if fee.status == "Paid" %}
+
+                                <span class="badge bg-success">
+
+                                    Paid
+
+                                </span>
+
+                                {% elif fee.status == "Pending" %}
+
+                                <span class="badge bg-danger">
+
+                                    Pending
+
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-warning text-dark">
+
+                                    Partial
+
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>{{ fee.payment_date }}</td>
+
+                            <td>
+
+                                <a href="{% url 'fee_profile' fee.fee_id %}"
+                                   class="btn btn-info btn-sm">
+
+                                    <i class="fa-solid fa-eye"></i>
+
+                                </a>
+
+                                <a href="{% url 'fee_update' fee.fee_id %}"
+                                   class="btn btn-warning btn-sm">
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                </a>
+
+                                <a href="{% url 'fee_delete' fee.fee_id %}"
+                                   class="btn btn-danger btn-sm">
+
+                                    <i class="fa-solid fa-trash"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="10" class="text-center text-danger">
+
+                                <h5>
+
+                                    No Fee Records Found
+
+                                </h5>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Add Examination
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-primary text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-file-circle-plus"></i>
+
+            Add Examination
+
+        </h1>
+
+        <p>Enter Student Examination Details</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>Examination Entry Form</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Student
+                        </label>
+
+                        <select name="student" class="form-select" required>
+
+                            <option value="">Select Student</option>
+
+                            {% for student in students %}
+
+                            <option value="{{ student.student_id }}">
+
+                                {{ student.first_name }} {{ student.last_name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Department
+                        </label>
+
+                        <input
+                            type="text"
+                            name="department"
+                            class="form-control"
+                            placeholder="Department"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Course
+                        </label>
+
+                        <input
+                            type="text"
+                            name="course"
+                            class="form-control"
+                            placeholder="Course"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Subject
+                        </label>
+
+                        <input
+                            type="text"
+                            name="subject"
+                            class="form-control"
+                            placeholder="Subject Name"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Exam Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="exam_date"
+                            class="form-control"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Total Marks
+                        </label>
+
+                        <input
+                            type="number"
+                            name="total_marks"
+                            class="form-control"
+                            placeholder="100"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Obtained Marks
+                        </label>
+
+                        <input
+                            type="number"
+                            name="obtained_marks"
+                            class="form-control"
+                            placeholder="Marks Obtained"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Grade
+                        </label>
+
+                        <select
+                            name="grade"
+                            class="form-select"
+                            required>
+
+                            <option value="">Select Grade</option>
+
+                            <option>A+</option>
+                            <option>A</option>
+                            <option>B+</option>
+                            <option>B</option>
+                            <option>C</option>
+                            <option>D</option>
+                            <option>F</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Result
+                    </label>
+
+                    <select
+                        name="result"
+                        class="form-select"
+                        required>
+
+                        <option value="">Select Result</option>
+
+                        <option>Pass</option>
+
+                        <option>Fail</option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Remarks
+                    </label>
+
+                    <textarea
+                        name="remarks"
+                        rows="4"
+                        class="form-control"
+                        placeholder="Optional Remarks"></textarea>
+
+                </div>
+
+                <div class="text-center">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-lg">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Save Examination
+
+                    </button>
+
+                    <a
+                        href="{% url 'examination_list' %}"
+                        class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

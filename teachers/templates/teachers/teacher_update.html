@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Update Teacher
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-warning text-dark py-4">
+
+    <div class="container text-center">
+
+        <h1>
+            <i class="fa-solid fa-user-pen"></i>
+            Update Teacher
+        </h1>
+
+        <p>Edit Teacher Information</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>Update Teacher Details</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>First Name</label>
+
+                        <input type="text"
+                               name="first_name"
+                               class="form-control"
+                               value="{{ teacher.first_name }}"
+                               required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Last Name</label>
+
+                        <input type="text"
+                               name="last_name"
+                               class="form-control"
+                               value="{{ teacher.last_name }}"
+                               required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Gender</label>
+
+                        <select class="form-select" name="gender">
+
+                            <option value="Male"
+                            {% if teacher.gender == "Male" %}selected{% endif %}>
+                            Male
+                            </option>
+
+                            <option value="Female"
+                            {% if teacher.gender == "Female" %}selected{% endif %}>
+                            Female
+                            </option>
+
+                            <option value="Other"
+                            {% if teacher.gender == "Other" %}selected{% endif %}>
+                            Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Date of Birth</label>
+
+                        <input type="date"
+                               name="dob"
+                               class="form-control"
+                               value="{{ teacher.dob|date:'Y-m-d' }}">
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Email</label>
+
+                        <input type="email"
+                               name="email"
+                               class="form-control"
+                               value="{{ teacher.email }}">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Phone</label>
+
+                        <input type="text"
+                               name="phone"
+                               class="form-control"
+                               value="{{ teacher.phone }}">
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Address</label>
+
+                    <textarea
+                        name="address"
+                        class="form-control"
+                        rows="3">{{ teacher.address }}</textarea>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Qualification</label>
+
+                        <input type="text"
+                               name="qualification"
+                               class="form-control"
+                               value="{{ teacher.qualification }}">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Department</label>
+
+                        <select name="department"
+                                class="form-select">
+
+                            <option value="Computer Science"
+                            {% if teacher.department == "Computer Science" %}selected{% endif %}>
+                            Computer Science
+                            </option>
+
+                            <option value="Information Technology"
+                            {% if teacher.department == "Information Technology" %}selected{% endif %}>
+                            Information Technology
+                            </option>
+
+                            <option value="Mechanical"
+                            {% if teacher.department == "Mechanical" %}selected{% endif %}>
+                            Mechanical
+                            </option>
+
+                            <option value="Electrical"
+                            {% if teacher.department == "Electrical" %}selected{% endif %}>
+                            Electrical
+                            </option>
+
+                            <option value="Civil"
+                            {% if teacher.department == "Civil" %}selected{% endif %}>
+                            Civil
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Joining Date</label>
+
+                        <input type="date"
+                               name="joining_date"
+                               class="form-control"
+                               value="{{ teacher.joining_date|date:'Y-m-d' }}">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Salary</label>
+
+                        <input type="number"
+                               name="salary"
+                               class="form-control"
+                               value="{{ teacher.salary }}">
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Teacher Photo</label>
+
+                    <input type="file"
+                           name="photo"
+                           class="form-control">
+
+                </div>
+
+                {% if teacher.photo %}
+
+                <div class="text-center mb-4">
+
+                    <img src="{{ teacher.photo.url }}"
+                         width="150"
+                         height="150"
+                         class="rounded-circle border shadow">
+
+                </div>
+
+                {% endif %}
+
+                <div class="text-center">
+
+                    <button class="btn btn-warning btn-lg">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                        Update Teacher
+
+                    </button>
+
+                    <a href="{% url 'teacher_list' %}"
+                       class="btn btn-secondary btn-lg">
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

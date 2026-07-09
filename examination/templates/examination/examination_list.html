@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Examination List
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-success text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-file-lines"></i>
+
+            Examination Management
+
+        </h1>
+
+        <p>View, Search, Update and Delete Examination Records</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="text-success">
+
+            Examination Records
+
+        </h2>
+
+        <a href="{% url 'examination_add' %}" class="btn btn-success">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Examination
+
+        </a>
+
+    </div>
+
+    <form method="GET" class="mb-4">
+
+        <div class="input-group">
+
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                value="{{ request.GET.search }}"
+                placeholder="Search Student / Subject">
+
+            <button class="btn btn-success">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Search
+
+            </button>
+
+        </div>
+
+    </form>
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+
+            <h4>
+
+                Examination List
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover table-striped">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Student</th>
+
+                            <th>Department</th>
+
+                            <th>Course</th>
+
+                            <th>Subject</th>
+
+                            <th>Total</th>
+
+                            <th>Obtained</th>
+
+                            <th>Grade</th>
+
+                            <th>Result</th>
+
+                            <th width="220">
+
+                                Action
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for exam in examinations %}
+
+                        <tr>
+
+                            <td>{{ exam.exam_id }}</td>
+
+                            <td>
+
+                                {{ exam.student.first_name }}
+                                {{ exam.student.last_name }}
+
+                            </td>
+
+                            <td>{{ exam.department }}</td>
+
+                            <td>{{ exam.course }}</td>
+
+                            <td>{{ exam.subject }}</td>
+
+                            <td>{{ exam.total_marks }}</td>
+
+                            <td>{{ exam.obtained_marks }}</td>
+
+                            <td>{{ exam.grade }}</td>
+
+                            <td>
+
+                                {% if exam.result == "Pass" %}
+
+                                <span class="badge bg-success">
+
+                                    Pass
+
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-danger">
+
+                                    Fail
+
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                <a href="{% url 'examination_profile' exam.exam_id %}"
+                                   class="btn btn-info btn-sm">
+
+                                    <i class="fa-solid fa-eye"></i>
+
+                                </a>
+
+                                <a href="{% url 'examination_update' exam.exam_id %}"
+                                   class="btn btn-warning btn-sm">
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                </a>
+
+                                <a href="{% url 'examination_delete' exam.exam_id %}"
+                                   class="btn btn-danger btn-sm">
+
+                                    <i class="fa-solid fa-trash"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="10" class="text-center text-danger">
+
+                                <h5>
+
+                                    No Examination Records Found
+
+                                </h5>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

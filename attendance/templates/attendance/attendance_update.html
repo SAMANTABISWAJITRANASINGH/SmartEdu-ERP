@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Update Attendance
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-warning text-dark py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-pen-to-square"></i>
+
+            Update Attendance
+
+        </h1>
+
+        <p>Edit Student Attendance Record</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>Update Attendance</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Student
+
+                        </label>
+
+                        <select
+                            name="student"
+                            class="form-select"
+                            required>
+
+                            {% for student in students %}
+
+                            <option
+                                value="{{ student.student_id }}"
+                                {% if attendance.student.student_id == student.student_id %}selected{% endif %}>
+
+                                {{ student.first_name }} {{ student.last_name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Department
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="department"
+                            class="form-control"
+                            value="{{ attendance.department }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Course
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="course"
+                            class="form-control"
+                            value="{{ attendance.course }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Attendance Date
+
+                        </label>
+
+                        <input
+                            type="date"
+                            name="attendance_date"
+                            class="form-control"
+                            value="{{ attendance.attendance_date|date:'Y-m-d' }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Attendance Status
+
+                    </label>
+
+                    <select
+                        name="status"
+                        class="form-select">
+
+                        <option value="Present"
+                        {% if attendance.status == "Present" %}selected{% endif %}>
+                            Present
+                        </option>
+
+                        <option value="Absent"
+                        {% if attendance.status == "Absent" %}selected{% endif %}>
+                            Absent
+                        </option>
+
+                        <option value="Leave"
+                        {% if attendance.status == "Leave" %}selected{% endif %}>
+                            Leave
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Remarks
+
+                    </label>
+
+                    <textarea
+                        name="remarks"
+                        rows="4"
+                        class="form-control">{{ attendance.remarks }}</textarea>
+
+                </div>
+
+                <div class="text-center">
+
+                    <button
+                        type="submit"
+                        class="btn btn-warning btn-lg">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Update Attendance
+
+                    </button>
+
+                    <a
+                        href="{% url 'attendance_list' %}"
+                        class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

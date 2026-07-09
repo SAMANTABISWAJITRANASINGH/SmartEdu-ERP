@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Delete Notice
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-danger text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-trash"></i>
+
+            Delete Notice
+
+        </h1>
+
+        <p>Confirm Notice Deletion</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-danger text-white">
+
+                    <h3>
+
+                        <i class="fa-solid fa-circle-exclamation"></i>
+
+                        Delete Confirmation
+
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="alert alert-danger text-center">
+
+                        <h4>
+
+                            Are you sure you want to delete this notice?
+
+                        </h4>
+
+                        <p>
+
+                            This action cannot be undone.
+
+                        </p>
+
+                    </div>
+
+                    <table class="table table-bordered table-striped">
+
+                        <tr>
+                            <th width="35%">Notice ID</th>
+                            <td>{{ notice.notice_id }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Title</th>
+                            <td>{{ notice.title }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Category</th>
+                            <td>{{ notice.category }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Notice Date</th>
+                            <td>{{ notice.notice_date }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Expiry Date</th>
+                            <td>{{ notice.expiry_date }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Status</th>
+
+                            <td>
+
+                                {% if notice.status == "Active" %}
+
+                                <span class="badge bg-success">
+
+                                    Active
+
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-secondary">
+
+                                    Inactive
+
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Attachment</th>
+
+                            <td>
+
+                                {% if notice.attachment %}
+
+                                <a href="{{ notice.attachment.url }}" target="_blank">
+
+                                    View Attachment
+
+                                </a>
+
+                                {% else %}
+
+                                No Attachment
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Description</th>
+
+                            <td>{{ notice.description }}</td>
+
+                        </tr>
+
+                    </table>
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="text-center mt-4">
+
+                            <button
+                                type="submit"
+                                class="btn btn-danger btn-lg">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                                Delete Notice
+
+                            </button>
+
+                            <a
+                                href="{% url 'notice_list' %}"
+                                class="btn btn-secondary btn-lg">
+
+                                <i class="fa-solid fa-arrow-left"></i>
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

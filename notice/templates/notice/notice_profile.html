@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Notice Details
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-info text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            Notice Details
+
+        </h1>
+
+        <p>View Complete Notice Information</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-info text-white">
+
+            <h3>
+
+                Notice Profile
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-striped">
+
+                <tr>
+
+                    <th width="30%">Notice ID</th>
+
+                    <td>{{ notice.notice_id }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Title</th>
+
+                    <td>{{ notice.title }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Category</th>
+
+                    <td>{{ notice.category }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Notice Date</th>
+
+                    <td>{{ notice.notice_date }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Expiry Date</th>
+
+                    <td>{{ notice.expiry_date }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Status</th>
+
+                    <td>
+
+                        {% if notice.status == "Active" %}
+
+                        <span class="badge bg-success">
+
+                            Active
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-secondary">
+
+                            Inactive
+
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Description</th>
+
+                    <td>
+
+                        {{ notice.description }}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>Attachment</th>
+
+                    <td>
+
+                        {% if notice.attachment %}
+
+                        <a href="{{ notice.attachment.url }}"
+                           target="_blank"
+                           class="btn btn-primary btn-sm">
+
+                            <i class="fa-solid fa-download"></i>
+
+                            View Attachment
+
+                        </a>
+
+                        {% else %}
+
+                        <span class="text-muted">
+
+                            No Attachment
+
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="card-footer text-center">
+
+            <a href="{% url 'notice_update' notice.notice_id %}"
+               class="btn btn-warning">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Update
+
+            </a>
+
+            <a href="{% url 'notice_delete' notice.notice_id %}"
+               class="btn btn-danger">
+
+                <i class="fa-solid fa-trash"></i>
+
+                Delete
+
+            </a>
+
+            <a href="{% url 'notice_list' %}"
+               class="btn btn-secondary">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Delete Course
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-danger text-white py-4">
+    <div class="container text-center">
+        <h1>
+            <i class="fa-solid fa-trash"></i>
+            Delete Course
+        </h1>
+        <p>Confirm Course Deletion</p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-danger text-white">
+
+                    <h3>
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        Delete Confirmation
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="text-center mb-4">
+
+                        {% if course.photo %}
+
+                        <img src="{{ course.photo.url }}"
+                             width="180"
+                             height="180"
+                             class="rounded shadow">
+
+                        {% else %}
+
+                        <img src="{% static 'images/course.png' %}"
+                             width="180"
+                             height="180"
+                             class="rounded shadow">
+
+                        {% endif %}
+
+                    </div>
+
+                    <h3 class="text-center text-danger">
+
+                        Are you sure you want to delete this course?
+
+                    </h3>
+
+                    <hr>
+
+                    <table class="table table-bordered">
+
+                        <tr>
+                            <th width="35%">Course ID</th>
+                            <td>{{ course.course_id }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Course Name</th>
+                            <td>{{ course.course_name }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Course Code</th>
+                            <td>{{ course.course_code }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Department</th>
+                            <td>{{ course.department }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Duration</th>
+                            <td>{{ course.duration }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Fees</th>
+                            <td>₹ {{ course.fees }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Total Seats</th>
+                            <td>{{ course.total_seats }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Available Seats</th>
+                            <td>{{ course.available_seats }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Coordinator</th>
+                            <td>{{ course.coordinator }}</td>
+                        </tr>
+
+                    </table>
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <div class="text-center">
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-lg">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                                Delete Course
+
+                            </button>
+
+                            <a href="{% url 'course_list' %}"
+                               class="btn btn-secondary btn-lg">
+
+                                <i class="fa-solid fa-arrow-left"></i>
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

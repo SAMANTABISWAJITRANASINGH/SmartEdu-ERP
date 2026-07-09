@@ -1,0 +1,333 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Update Fee
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-warning text-dark py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-pen-to-square"></i>
+
+            Update Fee
+
+        </h1>
+
+        <p>Edit Student Fee Details</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>Update Student Fee</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Student
+
+                        </label>
+
+                        <select name="student" class="form-select" required>
+
+                            {% for student in students %}
+
+                            <option value="{{ student.student_id }}"
+                            {% if fee.student.student_id == student.student_id %}selected{% endif %}>
+
+                                {{ student.first_name }} {{ student.last_name }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Department
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="department"
+                            class="form-control"
+                            value="{{ fee.department }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Course
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="course"
+                            class="form-control"
+                            value="{{ fee.course }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Fee Type
+
+                        </label>
+
+                        <select name="fee_type" class="form-select">
+
+                            <option value="Admission Fee"
+                            {% if fee.fee_type == "Admission Fee" %}selected{% endif %}>
+                                Admission Fee
+                            </option>
+
+                            <option value="Tuition Fee"
+                            {% if fee.fee_type == "Tuition Fee" %}selected{% endif %}>
+                                Tuition Fee
+                            </option>
+
+                            <option value="Examination Fee"
+                            {% if fee.fee_type == "Examination Fee" %}selected{% endif %}>
+                                Examination Fee
+                            </option>
+
+                            <option value="Library Fee"
+                            {% if fee.fee_type == "Library Fee" %}selected{% endif %}>
+                                Library Fee
+                            </option>
+
+                            <option value="Hostel Fee"
+                            {% if fee.fee_type == "Hostel Fee" %}selected{% endif %}>
+                                Hostel Fee
+                            </option>
+
+                            <option value="Transport Fee"
+                            {% if fee.fee_type == "Transport Fee" %}selected{% endif %}>
+                                Transport Fee
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Total Amount
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="total_amount"
+                            class="form-control"
+                            value="{{ fee.total_amount }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Paid Amount
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="paid_amount"
+                            class="form-control"
+                            value="{{ fee.paid_amount }}"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Payment Date
+
+                        </label>
+
+                        <input
+                            type="date"
+                            name="payment_date"
+                            class="form-control"
+                            value="{{ fee.payment_date|date:'Y-m-d' }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Payment Method
+
+                        </label>
+
+                        <select name="payment_method" class="form-select">
+
+                            <option value="Cash"
+                            {% if fee.payment_method == "Cash" %}selected{% endif %}>
+                                Cash
+                            </option>
+
+                            <option value="UPI"
+                            {% if fee.payment_method == "UPI" %}selected{% endif %}>
+                                UPI
+                            </option>
+
+                            <option value="Credit Card"
+                            {% if fee.payment_method == "Credit Card" %}selected{% endif %}>
+                                Credit Card
+                            </option>
+
+                            <option value="Debit Card"
+                            {% if fee.payment_method == "Debit Card" %}selected{% endif %}>
+                                Debit Card
+                            </option>
+
+                            <option value="Net Banking"
+                            {% if fee.payment_method == "Net Banking" %}selected{% endif %}>
+                                Net Banking
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Payment Status
+
+                    </label>
+
+                    <select name="status" class="form-select">
+
+                        <option value="Paid"
+                        {% if fee.status == "Paid" %}selected{% endif %}>
+                            Paid
+                        </option>
+
+                        <option value="Pending"
+                        {% if fee.status == "Pending" %}selected{% endif %}>
+                            Pending
+                        </option>
+
+                        <option value="Partial"
+                        {% if fee.status == "Partial" %}selected{% endif %}>
+                            Partial
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Remarks
+
+                    </label>
+
+                    <textarea
+                        name="remarks"
+                        rows="4"
+                        class="form-control">{{ fee.remarks }}</textarea>
+
+                </div>
+
+                <div class="text-center">
+
+                    <button
+                        type="submit"
+                        class="btn btn-warning btn-lg">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Update Fee
+
+                    </button>
+
+                    <a
+                        href="{% url 'fee_list' %}"
+                        class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

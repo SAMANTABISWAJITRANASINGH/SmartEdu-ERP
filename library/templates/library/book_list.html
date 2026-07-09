@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Book List
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-success text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-book-open"></i>
+
+            Library Management
+
+        </h1>
+
+        <p>View, Search, Update and Manage Library Books</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="text-success">
+
+            Library Books
+
+        </h2>
+
+        <a href="{% url 'book_add' %}" class="btn btn-success">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Book
+
+        </a>
+
+    </div>
+
+    <form method="GET" class="mb-4">
+
+        <div class="input-group">
+
+            <input
+                type="text"
+                name="search"
+                value="{{ request.GET.search }}"
+                class="form-control"
+                placeholder="Search Book / Author / ISBN">
+
+            <button class="btn btn-success">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                Search
+
+            </button>
+
+        </div>
+
+    </form>
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+
+            <h4>
+
+                Book List
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover table-striped">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Cover</th>
+
+                            <th>Book Title</th>
+
+                            <th>Author</th>
+
+                            <th>Publisher</th>
+
+                            <th>Category</th>
+
+                            <th>ISBN</th>
+
+                            <th>Available</th>
+
+                            <th width="220">
+
+                                Action
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for book in books %}
+
+                        <tr>
+
+                            <td>{{ book.book_id }}</td>
+
+                            <td>
+
+                                {% if book.cover %}
+
+                                <img src="{{ book.cover.url }}"
+                                     width="60"
+                                     height="80"
+                                     class="rounded">
+
+                                {% else %}
+
+                                <img src="{% static 'images/book.png' %}"
+                                     width="60"
+                                     height="80">
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>{{ book.title }}</td>
+
+                            <td>{{ book.author }}</td>
+
+                            <td>{{ book.publisher }}</td>
+
+                            <td>{{ book.category }}</td>
+
+                            <td>{{ book.isbn }}</td>
+
+                            <td>
+
+                                {{ book.available_copies }}/{{ book.total_copies }}
+
+                            </td>
+
+                            <td>
+
+                                <a href="{% url 'book_profile' book.book_id %}"
+                                   class="btn btn-info btn-sm">
+
+                                    <i class="fa-solid fa-eye"></i>
+
+                                </a>
+
+                                <a href="{% url 'book_update' book.book_id %}"
+                                   class="btn btn-warning btn-sm">
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                </a>
+
+                                <a href="{% url 'book_delete' book.book_id %}"
+                                   class="btn btn-danger btn-sm">
+
+                                    <i class="fa-solid fa-trash"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="9" class="text-center text-danger">
+
+                                <h5>
+
+                                    No Books Available
+
+                                </h5>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

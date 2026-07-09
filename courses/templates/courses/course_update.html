@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Update Course
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-warning text-dark py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-pen-to-square"></i>
+
+            Update Course
+
+        </h1>
+
+        <p>Edit Course Information</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>Update Course Details</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Course Name</label>
+
+                        <input type="text"
+                               name="course_name"
+                               class="form-control"
+                               value="{{ course.course_name }}"
+                               required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Course Code</label>
+
+                        <input type="text"
+                               name="course_code"
+                               class="form-control"
+                               value="{{ course.course_code }}"
+                               required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Department</label>
+
+                        <select name="department" class="form-select">
+
+                            <option value="Computer Science"
+                            {% if course.department == "Computer Science" %}selected{% endif %}>
+                                Computer Science
+                            </option>
+
+                            <option value="Information Technology"
+                            {% if course.department == "Information Technology" %}selected{% endif %}>
+                                Information Technology
+                            </option>
+
+                            <option value="Mechanical"
+                            {% if course.department == "Mechanical" %}selected{% endif %}>
+                                Mechanical
+                            </option>
+
+                            <option value="Electrical"
+                            {% if course.department == "Electrical" %}selected{% endif %}>
+                                Electrical
+                            </option>
+
+                            <option value="Civil"
+                            {% if course.department == "Civil" %}selected{% endif %}>
+                                Civil
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Duration</label>
+
+                        <input type="text"
+                               name="duration"
+                               class="form-control"
+                               value="{{ course.duration }}"
+                               required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Course Fees</label>
+
+                        <input type="number"
+                               name="fees"
+                               class="form-control"
+                               value="{{ course.fees }}"
+                               required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Total Seats</label>
+
+                        <input type="number"
+                               name="total_seats"
+                               class="form-control"
+                               value="{{ course.total_seats }}"
+                               required>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Available Seats</label>
+
+                        <input type="number"
+                               name="available_seats"
+                               class="form-control"
+                               value="{{ course.available_seats }}"
+                               required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Course Coordinator</label>
+
+                        <input type="text"
+                               name="coordinator"
+                               class="form-control"
+                               value="{{ course.coordinator }}"
+                               required>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Description</label>
+
+                    <textarea
+                        name="description"
+                        class="form-control"
+                        rows="4">{{ course.description }}</textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Course Image</label>
+
+                    <input type="file"
+                           name="photo"
+                           class="form-control">
+
+                </div>
+
+                {% if course.photo %}
+
+                <div class="text-center mb-4">
+
+                    <img src="{{ course.photo.url }}"
+                         width="180"
+                         height="180"
+                         class="rounded shadow">
+
+                </div>
+
+                {% endif %}
+
+                <div class="text-center">
+
+                    <button type="submit"
+                            class="btn btn-warning btn-lg">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Update Course
+
+                    </button>
+
+                    <a href="{% url 'course_list' %}"
+                       class="btn btn-secondary btn-lg">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

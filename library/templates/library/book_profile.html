@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Book Profile
+{% endblock %}
+
+{% block hero %}
+
+<div class="bg-primary text-white py-4">
+
+    <div class="container text-center">
+
+        <h1>
+
+            <i class="fa-solid fa-book"></i>
+
+            Book Details
+
+        </h1>
+
+        <p>Complete Library Book Information</p>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+
+                Book Profile
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-4 text-center">
+
+                    {% if book.cover %}
+
+                    <img src="{{ book.cover.url }}"
+                         class="img-fluid rounded shadow"
+                         style="height:300px; width:220px; object-fit:cover;">
+
+                    {% else %}
+
+                    <img src="{% static 'images/book.png' %}"
+                         class="img-fluid rounded shadow"
+                         style="height:300px; width:220px; object-fit:cover;">
+
+                    {% endif %}
+
+                </div>
+
+                <div class="col-md-8">
+
+                    <table class="table table-bordered table-striped">
+
+                        <tr>
+                            <th width="35%">Book ID</th>
+                            <td>{{ book.book_id }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Book Title</th>
+                            <td>{{ book.title }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Author</th>
+                            <td>{{ book.author }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Publisher</th>
+                            <td>{{ book.publisher }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>ISBN</th>
+                            <td>{{ book.isbn }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Category</th>
+                            <td>{{ book.category }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Edition</th>
+                            <td>{{ book.edition }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Total Copies</th>
+                            <td>{{ book.total_copies }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Available Copies</th>
+                            <td>{{ book.available_copies }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Description</th>
+                            <td>{{ book.description }}</td>
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-footer text-center">
+
+            <a href="{% url 'book_update' book.book_id %}"
+               class="btn btn-warning">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Update
+
+            </a>
+
+            <a href="{% url 'book_delete' book.book_id %}"
+               class="btn btn-danger">
+
+                <i class="fa-solid fa-trash"></i>
+
+                Delete
+
+            </a>
+
+            <a href="{% url 'book_list' %}"
+               class="btn btn-secondary">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
