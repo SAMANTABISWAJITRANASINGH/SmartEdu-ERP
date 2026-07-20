@@ -1,35 +1,115 @@
-
-
 # Create your views here.
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from .models import Teacher
+import re
 
 
 # -----------------------------
-# Teacher List + Search
+# Teacher List + Search+ voice 
 # -----------------------------
 def teacher_list(request):
 
-    search = request.GET.get("search")
+    search = request.GET.get("search", "").strip()
+
+    teachers = Teacher.objects.all()
+
+    voice_message = ""
 
     if search:
-        teachers = Teacher.objects.filter(
-            Q(first_name__icontains=search) |
-            Q(last_name__icontains=search) |
-            Q(email__icontains=search) |
-            Q(phone__icontains=search) |
-            Q(department__icontains=search) |
-            Q(qualification__icontains=search)
-        )
-    else:
-        teachers = Teacher.objects.all()
+
+        command = search.lower().strip()
+
+        show_all_commands = [
+            "show all teachers",
+            "show me all teachers",
+            "display all teachers",
+            "show all data",
+            "restore all teachers",
+            "reset",
+            "clear search",
+        ]
+
+        if command in show_all_commands:
+
+            teachers = Teacher.objects.all()
+            voice_message = "Showing all teachers."
+
+        else:
+
+            cleaned_name = command
+
+            phrases = [
+                "show me",
+                "show",
+                "find me",
+                "find",
+                "search",
+                "search for",
+                "teacher",
+                "teachers",
+                "teacher's",
+                "data",
+                "details",
+                "detail",
+                "record",
+                "records",
+                "profile",
+                "information",
+                "info",
+                "please",
+            ]
+
+            for phrase in phrases:
+                cleaned_name = cleaned_name.replace(phrase, " ")
+
+            cleaned_name = re.sub(r"'s\b", "", cleaned_name)
+            cleaned_name = re.sub(r"[^\w\s-]", " ", cleaned_name)
+            cleaned_name = " ".join(cleaned_name.split())
+
+            if cleaned_name:
+
+                words = cleaned_name.split()
+
+                query = Q()
+
+                for word in words:
+                    query &= (
+                        Q(first_name__icontains=word) |
+                        Q(last_name__icontains=word) |
+                        Q(email__icontains=word) |
+                        Q(phone__icontains=word) |
+                        Q(department__icontains=word) |
+                        Q(qualification__icontains=word)
+                    )
+
+                if "male" in cleaned_name:
+                    query &= Q(gender__iexact="Male")
+
+                elif "female" in cleaned_name:
+                    query &= Q(gender__iexact="Female")
+
+                teachers = Teacher.objects.filter(query).distinct()
+
+                if teachers.exists():
+                    voice_message = f"Found {teachers.count()} teacher(s)."
+                else:
+                    voice_message = "No teacher found."
+
+    context = {
+        "teachers": teachers,
+        "search_query": search,
+        "voice_message": voice_message,
+    }
 
     return render(
         request,
         "teachers/teacher_list.html",
-        {"teachers": teachers}
+        context,
     )
+
+
+
 
 
 # -----------------------------

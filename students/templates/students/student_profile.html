@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3>Student Profile</h3>
+        </div>
+
+        <div class="card-body text-center">
+
+            {% if student.photo %}
+                <img src="{{ student.photo.url }}"
+                     width="150"
+                     height="150"
+                     class="rounded-circle mb-3">
+            {% endif %}
+
+            <h3>{{ student.first_name }} {{ student.last_name }}</h3>
+
+            <hr>
+
+            <table class="table table-bordered">
+
+                <tr>
+                    <th>ID</th>
+                    <td>{{ student.student_id }}</td>
+                </tr>
+
+                <tr>
+                    <th>Gender</th>
+                    <td>{{ student.gender }}</td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td>{{ student.email }}</td>
+                </tr>
+
+                <tr>
+                    <th>Phone</th>
+                    <td>{{ student.phone }}</td>
+                </tr>
+
+                <tr>
+                    <th>Department</th>
+                    <td>{{ student.department }}</td>
+                </tr>
+
+                <tr>
+                    <th>Course</th>
+                    <td>{{ student.course }}</td>
+                </tr>
+
+                <tr>
+                    <th>Admission Date</th>
+                    <td>{{ student.admission_date }}</td>
+                </tr>
+
+                <tr>
+                    <th>Address</th>
+                    <td>{{ student.address }}</td>
+                </tr>
+
+            </table>
+
+            <a href="{% url 'student_list' %}" class="btn btn-primary">
+                Back
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -50,31 +50,78 @@ Teacher List
 
     </div>
 
-    <!-- Search -->
+    <!-- Search + Voice -->
 
-    <form method="GET" class="mb-4">
+    <form
+        method="GET"
+        action="{% url 'teacher_list' %}"
+        id="teacherSearchForm"
+        class="mb-4">
 
-        <div class="input-group">
+        <div class="row g-2">
 
-            <input
-                type="text"
-                name="search"
-                class="form-control"
-                placeholder="Search Teacher Name...">
+            <div class="col-md-7">
 
-            <button class="btn btn-success">
+                <input
+                    type="text"
+                    id="teacherSearchInput"
+                    name="search"
+                    class="form-control form-control-lg"
+                    placeholder="Type or say: Show me Balaram's data"
+                    value="{{ search_query }}">
 
-                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
 
-                Search
+            <div class="col-md-2">
 
-            </button>
+                <button
+                    type="button"
+                    id="voiceButton"
+                    class="btn btn-danger btn-lg w-100">
+
+                    🎤 Voice
+
+                </button>
+
+            </div>
+
+            <div class="col-md-2">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-lg w-100">
+
+                    🔍 Search
+
+                </button>
+
+            </div>
+
+            <div class="col-md-1">
+
+                <a
+                    href="{% url 'teacher_list' %}"
+                    class="btn btn-secondary btn-lg w-100">
+
+                    ↻
+
+                </a>
+
+            </div>
 
         </div>
 
     </form>
 
-    <!-- Table -->
+    {% if voice_message %}
+
+    <div class="alert alert-success">
+
+        {{ voice_message }}
+
+    </div>
+
+    {% endif %}
 
     <div class="card shadow">
 
@@ -111,7 +158,6 @@ Teacher List
                             <th>Phone</th>
 
                             <th>Qualification</th>
-
                             <th>Department</th>
 
                             <th>Joining</th>
@@ -143,14 +189,14 @@ Teacher List
                                     <img src="{{ teacher.photo.url }}"
                                          width="60"
                                          height="60"
-                                         class="rounded-circle">
+                                         class="rounded-circle border">
 
                                 {% else %}
 
                                     <img src="{% static 'images/default.png' %}"
                                          width="60"
                                          height="60"
-                                         class="rounded-circle">
+                                         class="rounded-circle border">
 
                                 {% endif %}
 
@@ -158,8 +204,12 @@ Teacher List
 
                             <td>
 
-                                {{ teacher.first_name }}
-                                {{ teacher.last_name }}
+                                <strong>
+
+                                    {{ teacher.first_name }}
+                                    {{ teacher.last_name }}
+
+                                </strong>
 
                             </td>
 
@@ -207,22 +257,31 @@ Teacher List
 
                             <td>
 
-                                <a href="{% url 'teacher_profile' teacher.teacher_id %}"
-                                   class="btn btn-primary btn-sm">
+                                <a
+                                    href="{% url 'teacher_profile' teacher.teacher_id %}"
+                                    class="btn btn-primary btn-sm">
+
+                                    <i class="fa-solid fa-eye"></i>
 
                                     View
 
                                 </a>
 
-                                <a href="{% url 'teacher_update' teacher.teacher_id %}"
-                                   class="btn btn-warning btn-sm">
+                                <a
+                                    href="{% url 'teacher_update' teacher.teacher_id %}"
+                                    class="btn btn-warning btn-sm">
+
+                                    <i class="fa-solid fa-pen"></i>
 
                                     Edit
 
                                 </a>
 
-                                <a href="{% url 'teacher_delete' teacher.teacher_id %}"
-                                   class="btn btn-danger btn-sm">
+                                <a
+                                    href="{% url 'teacher_delete' teacher.teacher_id %}"
+                                    class="btn btn-danger btn-sm">
+
+                                    <i class="fa-solid fa-trash"></i>
 
                                     Delete
 
@@ -236,9 +295,9 @@ Teacher List
 
                         <tr>
 
-                            <td colspan="11" class="text-center text-danger">
+                            <td colspan="11" class="text-center">
 
-                                <h5>
+                                <h5 class="text-danger">
 
                                     No Teacher Records Found
 
@@ -261,5 +320,72 @@ Teacher List
     </div>
 
 </div>
+<script>
+
+const voiceButton = document.getElementById("voiceButton");
+const searchInput = document.getElementById("teacherSearchInput");
+const form = document.getElementById("teacherSearchForm");
+
+if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-IN";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    voiceButton.addEventListener("click", function () {
+
+        recognition.start();
+
+        voiceButton.innerHTML = "🎙 Listening...";
+        voiceButton.classList.remove("btn-danger");
+        voiceButton.classList.add("btn-warning");
+
+    });
+
+    recognition.onresult = function (event) {
+
+        const transcript = event.results[0][0].transcript;
+
+        searchInput.value = transcript;
+
+        form.submit();
+
+    };
+
+    recognition.onend = function () {
+
+        voiceButton.innerHTML = "🎤 Voice";
+        voiceButton.classList.remove("btn-warning");
+        voiceButton.classList.add("btn-danger");
+
+    };
+
+    recognition.onerror = function (event) {
+
+        console.log(event.error);
+
+        alert("Voice recognition failed: " + event.error);
+
+        voiceButton.innerHTML = "🎤 Voice";
+        voiceButton.classList.remove("btn-warning");
+        voiceButton.classList.add("btn-danger");
+
+    };
+
+} else {
+
+    voiceButton.disabled = true;
+    voiceButton.innerHTML = "Voice Not Supported";
+
+}
+
+</script>
 
 {% endblock %}

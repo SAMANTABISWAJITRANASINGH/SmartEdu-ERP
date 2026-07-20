@@ -42,11 +42,6 @@ def student_list(request):
 
             voice_message = "Showing all student records."
 
-
-        # -------------------------------------------------
-        # COMMAND: FIND A SPECIFIC STUDENT
-        # -------------------------------------------------
-
         else:
 
             cleaned_name = command
@@ -74,11 +69,11 @@ def student_list(request):
                 "information",
                 "info",
                 "please",
+                "of",
             ]
 
             for phrase in phrases_to_remove:
                 cleaned_name = cleaned_name.replace(phrase, " ")
-
 
             # Swadhin's -> Swadhin
             cleaned_name = re.sub(
@@ -87,7 +82,6 @@ def student_list(request):
                 cleaned_name
             )
 
-
             # Remove punctuation
             cleaned_name = re.sub(
                 r"[^\w\s-]",
@@ -95,61 +89,56 @@ def student_list(request):
                 cleaned_name
             )
 
-
             # Remove extra spaces
             cleaned_name = " ".join(
                 cleaned_name.split()
             )
 
-
             # Search database
             if cleaned_name:
 
-                students = Student.objects.filter(
+                words = cleaned_name.split()
 
-                    Q(first_name__icontains=cleaned_name) |
+                query = Q()
 
-                    Q(last_name__icontains=cleaned_name) |
+                for word in words:
+                    query &= (
+                        Q(first_name__icontains=word) |
+                        Q(last_name__icontains=word) |
+                        Q(email__icontains=word) |
+                        Q(phone__icontains=word) |
+                        Q(course__icontains=word) |
+                        Q(department__icontains=word)
+                    )
+                                    # Gender filter
+                if "female" in cleaned_name:
+                    query &= Q(gender__iexact="Female")
 
-                    Q(email__icontains=cleaned_name) |
+                elif "male" in cleaned_name:
+                    query &= Q(gender__iexact="Male")
 
-                    Q(phone__icontains=cleaned_name) |
-
-                    Q(course__icontains=cleaned_name) |
-
-                    Q(department__icontains=cleaned_name)
-
-                ).distinct()
-
+                students = Student.objects.filter(query).distinct()
 
                 if students.exists():
-
                     voice_message = (
-                        f"Found student data for {cleaned_name.title()}."
+                        f"Found {students.count()} student(s)."
                     )
-
                 else:
-
                     voice_message = (
                         f"No student record found for "
-                        f"{cleaned_name.title()}."
+                        f"'{cleaned_name.title()}'."
                     )
 
-
     context = {
-
         "students": students,
-
         "search_query": search,
-
         "voice_message": voice_message,
     }
-
 
     return render(
         request,
         "students/student_list.html",
-        context
+        context,
     )
 
 
@@ -163,23 +152,14 @@ def student_add(request):
         student = Student(
 
             first_name=request.POST.get("first_name"),
-
             last_name=request.POST.get("last_name"),
-
             gender=request.POST.get("gender"),
-
             dob=request.POST.get("dob"),
-
             email=request.POST.get("email"),
-
             phone=request.POST.get("phone"),
-
             address=request.POST.get("address"),
-
             department=request.POST.get("department"),
-
             course=request.POST.get("course"),
-
             admission_date=request.POST.get("admission_date"),
         )
 
@@ -209,7 +189,9 @@ def student_profile(request, id):
     return render(
         request,
         "students/student_profile.html",
-        {"student": student}
+        {
+            "student": student
+        }
     )
 
 
@@ -246,7 +228,9 @@ def student_update(request, id):
     return render(
         request,
         "students/student_update.html",
-        {"student": student}
+        {
+            "student": student
+        }
     )
 
 
@@ -269,7 +253,9 @@ def student_delete(request, id):
     return render(
         request,
         "students/student_delete.html",
-        {"student": student}
+        {
+            "student": student
+        }
     )
 
 
